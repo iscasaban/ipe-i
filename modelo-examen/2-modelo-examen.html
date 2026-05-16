@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPEI — Examen de Simulación · Modelo 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primario: #00b4d8;
+      --color-primario-oscuro: #0077b6;
+      --color-acento: #f4a261;
+      --color-fondo: #f0f8ff;
+      --color-blanco: #ffffff;
+      --color-texto: #1d3557;
+      --color-texto-suave: #4a6580;
+      --color-tag-bg: #e0f7fa;
+      --color-tag-texto: #006d8f;
+      --color-border: #cce3f0;
+      --color-border-light: #ddeef8;
+      --color-correct-bg: #e6f9f2;
+      --color-correct-text: #1a7a55;
+      --color-wrong-bg: #fdeaea;
+      --color-wrong-text: #b83232;
+      --radio: 14px;
+      --radio-sm: 8px;
+      --sombra: 0 4px 18px rgba(0,119,182,0.10);
+      --sombra-hover: 0 8px 28px rgba(0,119,182,0.18);
+      --fuente-titulo: 'Raleway', sans-serif;
+      --fuente-cuerpo: 'Nunito', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--fuente-cuerpo),sans-serif; background: var(--color-fondo); color: var(--color-texto); min-height: 100vh; line-height: 1.6; }
+    #quiz-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.2rem 3rem; }
+    .qz-header { background: linear-gradient(135deg, #0e6b8c 0%, #00b4d8 100%); color: #fff; padding: 1.6rem 1.5rem 1.2rem; border-radius: var(--radio) var(--radio) 0 0; position: relative; overflow: hidden; }
+    .qz-header::before { content: '2'; font-family: var(--fuente-titulo),sans-serif,sans-serif; font-size: 6rem; font-weight: 900; opacity: 0.10; position: absolute; right: 1rem; top: -0.5rem; line-height: 1; }
+    .qz-header .modelo-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.8; margin-bottom: 0.3rem; }
+    .qz-header h1 { font-family: var(--fuente-titulo),sans-serif,sans-serif; font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 900; line-height: 1.2; }
+    .qz-header .subtitle { font-size: 0.82rem; opacity: 0.8; margin-top: 0.3rem; }
+    .pb-wrap { height: 5px; background: rgba(255,255,255,0.25); border-radius: 0; }
+    .pb { height: 100%; background: #fff; border-radius: 0 3px 3px 0; transition: width 0.35s ease; }
+    .qz-body { background: var(--color-blanco); border-radius: 0 0 var(--radio) var(--radio); box-shadow: var(--sombra); padding: 1.6rem 1.5rem 1.4rem; }
+    .stats-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--color-texto-suave); margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--color-border-light); }
+    .stats-bar .qnum { font-weight: 800; color: var(--color-primario-oscuro); font-size: 0.88rem; }
+    .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-primario); background: var(--color-tag-bg); display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px; margin-bottom: 0.8rem; }
+    .qt { font-size: 1rem; font-weight: 700; color: var(--color-texto); line-height: 1.5; margin-bottom: 1.2rem; }
+    .opts { display: flex; flex-direction: column; gap: 0.6rem; }
+    .opt { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 1rem; border-radius: var(--radio-sm); border: 1.5px solid var(--color-border); background: var(--color-blanco); cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--color-texto-suave); text-align: left; transition: border-color 0.15s, background 0.15s, transform 0.12s; width: 100%; }
+    .opt:hover:not(:disabled) { border-color: var(--color-primario); background: #f0faff; transform: translateX(3px); }
+    .opt:disabled { cursor: default; }
+    .olbl { min-width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 800; flex-shrink: 0; transition: background 0.15s, border-color 0.15s, color 0.15s; font-family: var(--fuente-titulo),sans-serif; }
+    .opt.selected { border-color: var(--color-primario-oscuro); background: #edf6ff; }
+    .opt.selected .olbl { background: var(--color-primario-oscuro); border-color: var(--color-primario-oscuro); color: #fff; }
+    .opt.correct { border-color: #1D9E75; background: var(--color-correct-bg); color: var(--color-correct-text); }
+    .opt.correct .olbl { background: #1D9E75; border-color: #1D9E75; color: #fff; }
+    .opt.wrong { border-color: #E24B4A; background: var(--color-wrong-bg); color: var(--color-wrong-text); }
+    .opt.wrong .olbl { background: #E24B4A; border-color: #E24B4A; color: #fff; }
+    .exp-box { margin-top: 1rem; padding: 0.8rem 1rem; background: #f5fbff; border-left: 4px solid var(--color-primario); border-radius: var(--radio-sm); font-size: 0.84rem; color: var(--color-texto-suave); font-style: italic; display: none; }
+    .exp-box.visible { display: block; }
+    .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 1.4rem; gap: 0.6rem; }
+    .btn { padding: 0.6rem 1.2rem; border-radius: var(--radio-sm); border: 1.5px solid var(--color-border); background: var(--color-blanco); color: var(--color-texto-suave); font-family: var(--fuente-cuerpo),sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.15s, border-color 0.15s, filter 0.15s; }
+    .btn:hover:not(:disabled) { background: var(--color-fondo); border-color: var(--color-primario); }
+    .btn:disabled { opacity: 0.35; cursor: default; }
+    .btn.pri { background: var(--color-primario-oscuro); border-color: var(--color-primario-oscuro); color: #fff; }
+    .btn.pri:hover:not(:disabled) { filter: brightness(0.88); }
+    .btn.blank { font-size: 0.8rem; color: var(--color-texto-suave); }
+    .res { background: var(--color-blanco); border-radius: var(--radio); box-shadow: var(--sombra); padding: 2rem 1.5rem; text-align: center; }
+    .sc-circle { width: 110px; height: 110px; border-radius: 50%; border: 5px solid var(--color-primario); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .sc-circle.passed { border-color: #1D9E75; }
+    .sc-circle.failed { border-color: #E24B4A; }
+    .sc-big { font-family: var(--fuente-titulo),sans-serif; font-size: 2rem; font-weight: 900; color: var(--color-texto); }
+    .sc-den { font-size: 0.72rem; color: var(--color-texto-suave); }
+    .res-t { font-family: var(--fuente-titulo),sans-serif; font-size: 1.3rem; font-weight: 900; color: var(--color-primario-oscuro); margin-bottom: 0.3rem; }
+    .res-s { font-size: 0.82rem; color: var(--color-texto-suave); margin-bottom: 1.2rem; }
+    .score-formula { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 1.2rem; font-size: 0.82rem; }
+    .sf-item { padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+    .correct-sf { background: var(--color-correct-bg); color: var(--color-correct-text); }
+    .wrong-sf { background: var(--color-wrong-bg); color: var(--color-wrong-text); }
+    .sf-sep { color: var(--color-texto-suave); font-weight: 700; }
+    .sf-result { font-weight: 800; color: var(--color-texto); font-size: 0.94rem; }
+    .sg { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .sc { text-align: center; }
+    .sc-n { font-family: var(--fuente-titulo),sans-serif,sans-serif; font-size: 1.5rem; font-weight: 900; }
+    .sc-l { font-size: 0.75rem; color: var(--color-texto-suave); font-weight: 600; }
+    .rev { margin-top: 1.5rem; text-align: left; }
+    .rev-t { font-family: var(--fuente-titulo),sans-serif,sans-serif; font-size: 1rem; font-weight: 900; color: var(--color-primario-oscuro); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--color-tag-bg); }
+    .tema-block { margin-bottom: 1.4rem; }
+    .tema-block-title { font-size: 0.72rem; font-weight: 700; color: var(--color-texto-suave); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px dashed var(--color-border-light); }
+    .ri { padding: 0.7rem 0.9rem; border-radius: var(--radio-sm); border: 1.5px solid var(--color-correct-bg); background: var(--color-correct-bg); margin-bottom: 0.5rem; font-size: 0.83rem; color: var(--color-correct-text); }
+    .ri.rw { background: var(--color-wrong-bg); border-color: var(--color-wrong-bg); color: var(--color-wrong-text); }
+    .ri.rb { background: #f5f5f5; border-color: #e0e0e0; color: #888; }
+    .ri-detail { display: block; margin-top: 4px; font-size: 0.78rem; }
+    .ri-exp { display: block; margin-top: 4px; font-size: 0.76rem; opacity: 0.8; font-style: italic; color: var(--color-texto-suave); }
+    .btn-reiniciar { margin: 0.5rem auto 1.5rem; display: block; }
+    @media (max-width: 500px) { .nav .btn.blank { display: none; } .score-formula { font-size: 0.75rem; } .sg { gap: 1rem; } }
+  </style>
+</head>
+<body>
+<div id="quiz-wrap">
+  <div class="qz-header">
+    <div class="pb-wrap"><div class="pb" id="pb" style="width:0%"></div></div>
+    <div style="padding: 1rem 0 0;">
+      <div class="modelo-label">IPEI · Examen de Simulación</div>
+      <h1>Modelo 2 — 40 preguntas</h1>
+      <div class="subtitle">T1 · T2 · T3 · T4 · T5 &nbsp;|&nbsp; Respuestas incorrectas restan ¼ del valor</div>
+    </div>
+  </div>
+  <div class="qz-body" id="qz-body"></div>
+</div>
+<script>
+  const TEMAS = {
+    1: "Tema 1 · Características del Sector Productivo",
+    2: "Tema 2 · Prevención de Riesgos Laborales",
+    3: "Tema 3 · Derecho Laboral",
+    4: "Tema 4 · Autoorientación e Inserción Profesional",
+    5: "Tema 5 · Estrategias de Aprendizaje Autónomo"
+  };
+
+  const qs = [
+    // ── TEMA 1 (P09–P16) ──
+    { tema:1, q:"¿Cuántos años como mínimo debe tener una persona para acceder a la función pública?", opts:["18 años","21 años","16 años","14 años"], c:2, exp:"La edad mínima para acceder a la función pública es de 16 años, aunque para determinadas plazas puede exigirse más edad." },
+    { tema:1, q:"Un funcionario interino es aquel que:", opts:["Trabaja de forma permanente con nombramiento oficial","Trabaja temporalmente por necesidad y urgencia cuando no hay un funcionario de carrera disponible","Es personal directivo de la Administración pública","Trabaja a tiempo parcial para la Administración"], c:1, exp:"El funcionario interino ocupa un puesto temporalmente por razones de necesidad y urgencia cuando no hay un funcionario de carrera disponible." },
+    { tema:1, q:"¿Cuál es el orden lógico de un proceso de búsqueda de empleo en la oferta privada?", opts:["Entrevista → análisis de la oferta → contratación","Contratación → pruebas de selección → análisis de la oferta","Análisis de la oferta → proceso selectivo → conclusión del proceso","Envío del CV → análisis de la oferta → entrevista"], c:2, exp:"El orden lógico es: análisis de la oferta, proceso selectivo (pruebas y entrevistas) y conclusión del proceso (contratación o descarte)." },
+    { tema:1, q:"¿Qué describe el itinerario formativo o perfil académico?", opts:["Las notas obtenidas durante los estudios","La trayectoria de aprendizaje ordenada de menor a mayor dificultad","El conjunto de trabajos realizados a lo largo de la vida laboral","El número de titulaciones que posee un trabajador"], c:1, exp:"El itinerario formativo describe la trayectoria de aprendizaje de una persona, ordenada de menor a mayor dificultad o especialización." },
+    { tema:1, q:"¿Cuándo termina el itinerario formativo de una persona?", opts:["Al finalizar el ciclo formativo","Al obtener el primer empleo","Al jubilarse","No tiene fin definido"], c:3, exp:"El itinerario formativo no tiene fin definido: el aprendizaje a lo largo de toda la vida (lifelong learning) es continuo." },
+    { tema:1, q:"Las aptitudes en el ámbito laboral son:", opts:["Las normas de comportamiento que se siguen en el trabajo","Las características que condicionan la conducta y permiten llevar a cabo tareas","Las titulaciones académicas obtenidas","Las preferencias personales sobre el tipo de trabajo"], c:1, exp:"Las aptitudes son las características internas de una persona que condicionan su conducta y le permiten llevar a cabo tareas con eficacia." },
+    { tema:1, q:"¿Cuál de las siguientes es una capacidad transversal muy valorada por las empresas?", opts:["Manejo de maquinaria específica del sector","Conocimiento de idiomas extranjeros","Trabajo en equipo","Titulación universitaria superior"], c:2, exp:"El trabajo en equipo es una capacidad transversal (aplicable a cualquier puesto y sector) especialmente valorada por las empresas." },
+    { tema:1, q:"Las capacidades específicas son aquellas que:", opts:["Son comunes a cualquier persona y puesto de trabajo","Están relacionadas con las tareas individuales de un puesto concreto","Se aprenden únicamente en la universidad","Solo se adquieren con la experiencia laboral"], c:1, exp:"Las capacidades específicas están directamente relacionadas con las tareas individuales de un puesto de trabajo concreto." },
+    // ── TEMA 2 (P33–P40) ──
+    { tema:2, q:"¿Qué regula la Ley de Prevención de Riesgos Laborales (LPRL)?", opts:["Los convenios colectivos de los trabajadores","Los derechos y obligaciones en materia de riesgos laborales para trabajadores y empresarios","Las prestaciones por accidente de trabajo de la Seguridad Social","Los niveles salariales mínimos del sector"], c:1, exp:"La LPRL regula los derechos y obligaciones de trabajadores y empresarios en materia de prevención de riesgos laborales." },
+    { tema:2, q:"¿Cuál es uno de los derechos del trabajador en materia de prevención?", opts:["Decidir qué medidas preventivas se aplican en su puesto","Rechazar el uso de EPI si le resultan incómodos","Abandonar su puesto de trabajo sin ser sancionado en caso de riesgo grave e inminente","Negarse a realizar los reconocimientos médicos en todo caso"], c:2, exp:"El trabajador tiene derecho a abandonar su puesto de trabajo sin ser sancionado cuando exista un riesgo grave e inminente para su seguridad." },
+    { tema:2, q:"¿Qué cuatro elementos forman el tetraedro del fuego?", opts:["Oxígeno, hidrógeno, calor y combustible","Comburente, combustible, calor y reacción en cadena","Agua, fuego, tierra y aire","Llama, humo, temperatura y presión"], c:1, exp:"El tetraedro del fuego está compuesto por cuatro elementos: comburente (oxígeno), combustible, calor y reacción en cadena." },
+    { tema:2, q:"¿Qué método de extinción del fuego consiste en excluir el oxígeno?", opts:["Segregación","Enfriamiento","Inhibición","Sofocación"], c:3, exp:"La sofocación es el método de extinción que actúa excluyendo el oxígeno (comburente), impidiendo así que continúe la combustión." },
+    { tema:2, q:"¿Qué clase de fuego afecta a metales combustibles como el magnesio o el sodio?", opts:["Clase A","Clase B","Clase C","Clase D"], c:3, exp:"Los fuegos de clase D son los que afectan a metales combustibles como el magnesio, el sodio o el potasio." },
+    { tema:2, q:"El límite de ruido que establece la normativa para una jornada de 8 horas es de:", opts:["65 decibelios","75 decibelios","87 decibelios","100 decibelios"], c:2, exp:"La normativa establece un límite de exposición al ruido de 87 decibelios para una jornada de 8 horas." },
+    { tema:2, q:"¿Cuál es la principal vía de entrada de los agentes químicos en el organismo?", opts:["La vía dérmica","La vía digestiva","La vía respiratoria","La vía parenteral"], c:2, exp:"La vía respiratoria es la principal vía de entrada de los agentes químicos en el organismo, a través de la inhalación." },
+    { tema:2, q:"Los agentes biológicos del grupo 4 se caracterizan por:", opts:["Tener baja probabilidad de causar enfermedades","Causar enfermedades que no se propagan a la colectividad","Tener tratamiento eficaz disponible","Causar enfermedades graves que se extienden a la colectividad y sin tratamiento conocido"], c:3, exp:"Los agentes biológicos del grupo 4 son los más peligrosos: causan enfermedades graves, se transmiten a la colectividad y no tienen tratamiento conocido eficaz." },
+    // ── TEMA 3 (P09–P16) ──
+    { tema:3, q:"¿A partir de cuántos trabajadores es obligatoria la existencia de delegados de personal?", opts:["A partir de 6 trabajadores","A partir de 10 trabajadores","A partir de 50 trabajadores","A partir de 11 trabajadores"], c:3, exp:"La representación mediante delegados de personal es obligatoria a partir de 11 trabajadores (entre 6 y 10, su elección es optativa)." },
+    { tema:3, q:"Una empresa tiene 320 trabajadores. ¿Cuántos miembros tendrá su comité de empresa?", opts:["9 miembros","13 miembros","17 miembros","21 miembros"], c:1, exp:"Según la escala legal, una empresa de 251 a 500 trabajadores tiene un comité de empresa de 13 miembros." },
+    { tema:3, q:"¿Cuánto tiempo tiene la parte receptora para responder a una propuesta de negociación de un convenio colectivo?", opts:["15 días","2 semanas","1 mes","3 meses"], c:2, exp:"La parte receptora de una propuesta de negociación colectiva dispone de 1 mes para responder motivadamente." },
+    { tema:3, q:"¿Qué ocurre con un convenio colectivo cuando llega a su fecha de expiración sin que ninguna parte lo denuncie?", opts:["Se extingue automáticamente","Se prorroga de año en año","Debe renegociarse obligatoriamente en 30 días","Pasa a aplicarse el convenio del sector superior"], c:1, exp:"Si ninguna parte denuncia el convenio al llegar a su vencimiento, se prorroga automáticamente de año en año." },
+    { tema:3, q:"¿Cuál es la duración máxima del contrato por circunstancias de la producción ante un incremento imprevisible?", opts:["3 meses","12 meses","6 meses, ampliables a 6 más por convenio sectorial","90 días naturales"], c:2, exp:"El contrato por circunstancias de la producción ante incremento imprevisible tiene una duración máxima de 6 meses, ampliable hasta 6 meses más por convenio sectorial." },
+    { tema:3, q:"Un trabajador lleva 20 meses en la misma empresa con dos contratos temporales consecutivos. ¿Qué ocurre con su contrato?", opts:["Se extingue automáticamente al cumplir los 24 meses","Se convierte en indefinido por superar los 18 meses en 24","Debe firmarse un nuevo contrato temporal","Nada, la empresa puede seguir con contratos temporales indefinidamente"], c:1, exp:"El trabajador adquiere la condición de indefinido si ha estado más de 18 meses en un período de 24 con contratos temporales en la misma empresa." },
+    { tema:3, q:"¿Cuál es la duración mínima y máxima del contrato de formación en alternancia?", opts:["6 meses y 1 año","1 mes y 6 meses","3 meses y 2 años","6 meses y 3 años"], c:2, exp:"El contrato de formación en alternancia tiene una duración mínima de 3 meses y máxima de 2 años." },
+    { tema:3, q:"En el contrato de puesta a disposición mediante una ETT, ¿quién abona el salario y las cotizaciones a la Seguridad Social del trabajador?", opts:["La empresa usuaria","El propio trabajador","La ETT","Lo pagan al 50% la ETT y la empresa usuaria"], c:2, exp:"Es la ETT quien abona el salario y realiza las cotizaciones a la Seguridad Social del trabajador cedido." },
+    // ── TEMA 4 (P09–P16) ──
+    { tema:4, q:"¿Cuál de las siguientes afirmaciones sobre la autoestima en la búsqueda de empleo es FALSA?", opts:["Ayuda a manejar mejor los rechazos","Mantiene alta la motivación para seguir aplicando","Garantiza encontrar empleo en menos de un mes","Permite presentar habilidades con mayor seguridad"], c:2, exp:"Una alta autoestima ayuda en la búsqueda de empleo, pero no garantiza encontrarlo en un plazo determinado. Esa afirmación es falsa." },
+    { tema:4, q:"¿Cuál de estos NO es un ejercicio para fortalecer la autoestima?", opts:["Diario de logros","Afirmaciones positivas","Compararse constantemente con otros candidatos","Red de apoyo con amigos o mentores"], c:2, exp:"Compararse constantemente con otros candidatos es perjudicial para la autoestima. Los ejercicios positivos son el diario de logros, las afirmaciones y la red de apoyo." },
+    { tema:4, q:"El balance profesional sirve principalmente para:", opts:["Calcular el salario que mereces","Evaluar integralmente competencias, experiencias y aspiraciones alineándolas con el mercado","Redactar el currículum vitae","Conocer las leyes laborales vigentes"], c:1, exp:"El balance profesional permite evaluar de forma integral las competencias, experiencias y aspiraciones propias, alineándolas con las demandas del mercado." },
+    { tema:4, q:"¿Cuál de estas NO es una fuente de información para realizar el balance profesional?", opts:["Autoevaluación propia","Feedback de colegas y supervisores","Evaluaciones de desempeño formales","La opinión de personas ajenas al sector sin ningún criterio profesional"], c:3, exp:"Las opiniones de personas sin criterio profesional en el sector no son una fuente válida para el balance profesional." },
+    { tema:4, q:"En el método STAR, ¿qué significa la letra \"A\"?", opts:["Aprendizaje","Acción","Actitud","Análisis"], c:1, exp:"En el método STAR, la A corresponde a Acción: las acciones concretas que tomaste para resolver la situación descrita." },
+    { tema:4, q:"¿Para qué sirve el método STAR en una entrevista de trabajo?", opts:["Para memorizar datos sobre la empresa","Para estructurar los logros de forma clara: situación, tarea, acción y resultado","Para preparar preguntas al entrevistador","Para calcular las expectativas salariales"], c:1, exp:"El método STAR sirve para estructurar la respuesta a preguntas conductuales en entrevistas: Situación, Tarea, Acción y Resultado." },
+    { tema:4, q:"¿Qué son los itinerarios formativos?", opts:["Las rutas de transporte para llegar a la empresa","Los horarios de clase del ciclo formativo","Las rutas educativas y de capacitación para adquirir habilidades de un perfil profesional","Los planes de pensiones de los trabajadores"], c:2, exp:"Los itinerarios formativos son las rutas educativas y de capacitación diseñadas para adquirir las habilidades de un perfil profesional determinado." },
+    { tema:4, q:"¿Cuál de las siguientes es una modalidad formativa dentro de los itinerarios profesionales?", opts:["El cierre patronal","La huelga de sector","Los talleres y seminarios","La negociación colectiva"], c:2, exp:"Los talleres y seminarios son una modalidad formativa que forma parte de los itinerarios profesionales de desarrollo competencial." },
+    // ── TEMA 5 (P09–P16) ──
+    { tema:5, q:"El \"cultivo de relaciones profesionales\" como característica de la empleabilidad implica:", opts:["Acumular títulos y certificaciones","Generar redes de confianza, compartir información y cuidar la imagen profesional","Publicar el currículum en el mayor número posible de portales de empleo","Evitar compartir información con la competencia"], c:1, exp:"Cultivar relaciones profesionales implica generar redes de confianza, compartir información útil y cuidar la imagen profesional en el entorno." },
+    { tema:5, q:"¿Qué es la capacidad de adaptación según el tema?", opts:["La habilidad de memorizar información nueva rápidamente","La capacidad de evitar situaciones de cambio en el entorno laboral","La habilidad de ajustarse a nuevas condiciones, cambios y desafíos siendo flexible y abierto al aprendizaje","La capacidad de trabajar siempre de la misma manera, con independencia del entorno"], c:2, exp:"La capacidad de adaptación es la habilidad de ajustarse a nuevas condiciones, cambios y desafíos con flexibilidad y apertura al aprendizaje." },
+    { tema:5, q:"¿Cuál de los siguientes ejemplos ilustra mejor la capacidad de adaptación en el mercado laboral?", opts:["Negarse a usar nuevas herramientas tecnológicas por preferir los métodos conocidos","Adaptarse rápidamente al teletrabajo y la digitalización durante la pandemia de COVID-19","Cambiar de empresa cada mes para ganar experiencia diversa","Especializarse en una única habilidad técnica durante toda la carrera"], c:1, exp:"Adaptarse al teletrabajo y la digitalización durante la pandemia es el ejemplo paradigmático de capacidad de adaptación ante un cambio imprevisto." },
+    { tema:5, q:"¿Qué significan las siglas PLE?", opts:["Plan de Logros Educativos","Plataforma de Lectura Especializada","Personal Learning Environment (Entorno Personal de Aprendizaje)","Programa de Liderazgo Empresarial"], c:2, exp:"PLE son las siglas de Personal Learning Environment, es decir, Entorno Personal de Aprendizaje." },
+    { tema:5, q:"¿Cuál de las siguientes NO es una función del PLE?", opts:["Acceder a información relevante","Organizar el conocimiento","Sustituir completamente la formación reglada","Reflexionar y evaluar el progreso"], c:2, exp:"El PLE complementa la formación reglada pero no la sustituye; sus funciones son acceder, organizar, compartir y reflexionar sobre el aprendizaje." },
+    { tema:5, q:"¿Qué herramienta pertenece a la categoría de \"organización del conocimiento\" dentro del PLE?", opts:["Google Scholar","Slack","MindMeister","WordPress"], c:2, exp:"MindMeister es una herramienta de mapas mentales que pertenece a la categoría de organización del conocimiento dentro del PLE." },
+    { tema:5, q:"Según el tema, ¿cuál es el primer paso para diseñar un PLE en un entorno digital?", opts:["Seleccionar las redes sociales más populares","Definir claramente los objetivos y necesidades de aprendizaje","Crear un blog personal en WordPress","Inscribirse en el mayor número posible de cursos online"], c:1, exp:"El primer paso para diseñar un PLE es definir claramente los propios objetivos y necesidades de aprendizaje." },
+    { tema:5, q:"¿Qué plataforma se menciona como red social profesional clave tanto para el networking como para el PLE?", opts:["Instagram","TikTok","LinkedIn","Pinterest"], c:2, exp:"LinkedIn es la red social profesional por excelencia, útil tanto para el networking como para integrar el PLE." }
+  ];
+
+  const SCORE_OK  = 10 / qs.length;
+  const SCORE_BAD = -SCORE_OK / 4;
+  let cur = 0, answered = Array(qs.length).fill(null), selected = Array(qs.length).fill(null), showRes = false;
+
+  function calcScore() {
+    let s = 0;
+    qs.forEach((q, i) => {
+      if (answered[i] === null) return;
+      s += answered[i] === q.c ? SCORE_OK : SCORE_BAD;
+    });
+    return s;
+  }
+
+  function render() {
+    if (showRes) { renderRes(); return; }
+    const q = qs[cur];
+    const isAns = answered[cur] !== null;
+    const prog = ((cur + 1) / qs.length) * 100;
+    const prevTema = cur > 0 ? qs[cur - 1].tema : null;
+    const showLabel = !prevTema || prevTema !== q.tema;
+    document.getElementById('pb').style.width = prog + '%';
+    const body = document.getElementById('qz-body');
+    body.innerHTML = `
+    <div class="stats-bar">
+      <span class="qnum">Pregunta ${cur + 1} / ${qs.length}</span>
+      <span>${answered.filter(a => a !== null).length} respondidas · ${answered.filter(a => a === null).length} restantes</span>
+    </div>
+    ${showLabel ? `<div class="section-label">${TEMAS[q.tema]}</div>` : ''}
+    <div class="qt">${q.q}</div>
+    <div class="opts">
+      ${q.opts.map((o, i) => {
+      let cls = 'opt';
+      if (isAns && i === selected[cur]) cls += ' selected';
+      return `<button class="${cls}" onclick="ans(${i})" ${isAns ? 'disabled' : ''}>
+          <span class="olbl">${String.fromCharCode(65+i)}</span>
+          <span>${o}</span>
+        </button>`;
+    }).join('')}
+    </div>
+    <div class="exp-box">${q.exp}</div>
+    <div class="nav">
+      <button class="btn" onclick="go(-1)" ${cur === 0 ? 'disabled' : ''}>← Anterior</button>
+      <button class="btn blank" onclick="goBlank()">Dejar en blanco →</button>
+      ${cur === qs.length - 1
+            ? `<button class="btn pri" onclick="tryFinish()">Ver resultados →</button>`
+            : `<button class="btn pri" onclick="go(1)">Siguiente →</button>`}
+    </div>`;
+  }
+
+  function ans(idx) {
+    if (answered[cur] !== null) return;
+    selected[cur] = idx; answered[cur] = idx; render();
+  }
+  function goBlank() { go(1); }
+  function go(d) {
+    const next = cur + d;
+    if (next < 0) return;
+    if (next >= qs.length) { tryFinish(); return; }
+    cur = next; render();
+  }
+  function tryFinish() {
+    const u = answered.filter(a => a === null).length;
+    if (u > 0) { if (!confirm(`Tienes ${u} pregunta(s) sin responder.\nLas preguntas en blanco no suman ni restan.\n\n¿Finalizar el examen?`)) return; }
+    showRes = true; render();
+  }
+  function renderRes() {
+    const correct = qs.filter((q, i) => answered[i] === q.c).length;
+    const wrong   = qs.filter((q, i) => answered[i] !== null && answered[i] !== q.c).length;
+    const blank   = qs.filter((q, i) => answered[i] === null).length;
+    const raw = calcScore(); const final = Math.max(0, raw); const display = final.toFixed(2);
+    const passed = final >= 5;
+    const msg = final >= 9 ? '¡Excelente resultado!' : final >= 7 ? 'Buen trabajo' : final >= 5 ? 'Aprobado' : 'Suspenso';
+    const temas = [...new Set(qs.map(q => q.tema))];
+    document.getElementById('pb').style.width = '100%';
+    document.getElementById('qz-body').innerHTML = `
+    <div class="res">
+      <div class="sc-circle ${passed ? 'passed' : 'failed'}">
+        <span class="sc-big">${display}</span><span class="sc-den">sobre 10</span>
+      </div>
+      <div class="res-t">${msg}</div>
+      <div class="res-s">Modelo 2 · Examen de simulación IPEI</div>
+      <div class="score-formula">
+        <span class="sf-item correct-sf">✓ ${correct} correctas × ${SCORE_OK.toFixed(4)}</span>
+        <span class="sf-sep">−</span>
+        <span class="sf-item wrong-sf">✗ ${wrong} incorrectas × ${Math.abs(SCORE_BAD).toFixed(4)}</span>
+        <span class="sf-sep">=</span>
+        <span class="sf-result">${raw.toFixed(4)}</span>
+      </div>
+      <div class="sg">
+        <div class="sc"><div class="sc-n" style="color:#1D9E75">${correct}</div><div class="sc-l">Correctas</div></div>
+        <div class="sc"><div class="sc-n" style="color:#E24B4A">${wrong}</div><div class="sc-l">Incorrectas</div></div>
+        <div class="sc"><div class="sc-n" style="color:#888">${blank}</div><div class="sc-l">En blanco</div></div>
+      </div>
+      <button class="btn pri btn-reiniciar" onclick="restart()">Repetir examen</button>
+      <div class="rev">
+        <div class="rev-t">Repaso por temas</div>
+        ${temas.map(tema => {
+      const tqs = qs.map((q,i)=>({...q,idx:i})).filter(q=>q.tema===tema);
+      return `<div class="tema-block">
+            <div class="tema-block-title">${TEMAS[tema]}</div>
+            ${tqs.map(q => {
+        const isC = answered[q.idx] === q.c; const wasA = answered[q.idx] !== null;
+        const cls = wasA ? (isC ? 'rc' : 'rw') : 'rb';
+        return `<div class="ri ${cls}"><strong>P${q.idx+1}:</strong> ${q.q}
+                <span class="ri-detail">${wasA ? (isC ? '✓ Tu respuesta: ' + q.opts[answered[q.idx]] : '✗ Tu respuesta: ' + q.opts[answered[q.idx]] + ' · Correcta: ' + q.opts[q.c]) : '— En blanco · Correcta: ' + q.opts[q.c]}</span>
+                <span class="ri-exp">${q.exp}</span></div>`;
+      }).join('')}
+          </div>`;
+    }).join('')}
+      </div>
+    </div>`;
+  }
+  function restart() {
+    cur = 0; answered = Array(qs.length).fill(null); selected = Array(qs.length).fill(null); showRes = false; render();
+  }
+  render();
+</script>
+</body>
+</html>

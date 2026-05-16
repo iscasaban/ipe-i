@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tema 2 · Prevención de Riesgos Laborales</title>
+  <link rel="stylesheet" href="../estilos.css" />
+  <style>
+    :root {
+      --prl-rojo: #e63946;
+      --prl-naranja: #f4a261;
+      --prl-verde: #2ec4b6;
+    }
+    .tabla-riesgo { width:100%; border-collapse:collapse; font-size:0.82rem; margin-top:0.8rem; }
+    .tabla-riesgo th { background:var(--color-primario); color:white; padding:0.5rem 0.7rem; font-weight:700; }
+    .tabla-riesgo td { padding:0.4rem 0.7rem; border:1px solid #d0eaf5; text-align:center; }
+    .tr-verde    { background:#d4edda; color:#155724; font-weight:600; }
+    .tr-amarillo { background:#fff3cd; color:#856404; font-weight:600; }
+    .tr-naranja  { background:#ffe0b2; color:#7b3800; font-weight:600; }
+    .tr-rojo     { background:#f8d7da; color:#721c24; font-weight:600; }
+    .tr-rojof    { background:#c82333; color:white;   font-weight:700; }
+
+    .tetraedro { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:0.7rem; }
+    .tetra-item { background:#fff8f0; border-left:4px solid var(--prl-naranja); border-radius:8px; padding:0.6rem 0.8rem; font-size:0.88rem; }
+    .tetra-item strong { color:#b85c00; display:block; margin-bottom:0.15rem; }
+
+    .fuegos-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:0.6rem; margin-top:0.7rem; }
+    .fuego-card { border-radius:10px; padding:0.7rem 0.8rem; text-align:center; font-size:0.82rem; }
+    .fuego-card .letra { font-size:1.6rem; font-weight:900; line-height:1; }
+    .fuego-A { background:#d4edda; color:#155724; }
+    .fuego-B { background:#f8d7da; color:#721c24; }
+    .fuego-C { background:#cce5ff; color:#004085; }
+    .fuego-D { background:#fff3cd; color:#856404; }
+    .fuego-F { background:#f5f5f5; color:#333; border:1px solid #ccc; }
+
+    .epi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.7rem; margin-top:0.7rem; }
+    .epi-card { border-radius:10px; padding:0.8rem; text-align:center; font-size:0.82rem; }
+    .epi-1 { background:#e8f5e9; border:2px solid #81c784; }
+    .epi-2 { background:#fff8e1; border:2px solid #ffd54f; }
+    .epi-3 { background:#fce4ec; border:2px solid #e57373; }
+    .epi-card .cat-num { font-size:1.4rem; font-weight:900; margin-bottom:0.3rem; }
+
+    .senales-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:0.6rem; margin-top:0.7rem; }
+    .senal-item { border-radius:10px; padding:0.7rem; text-align:center; font-size:0.82rem; }
+    .senal-prohibicion { background:#f8d7da; border:2px solid #c82333; color:#721c24; }
+    .senal-advertencia { background:#fff3cd; border:2px solid #ffc107; color:#856404; }
+    .senal-obligacion  { background:#cce5ff; border:2px solid #004085; color:#004085; }
+    .senal-salvamento  { background:#d4edda; border:2px solid #28a745; color:#155724; }
+    .senal-incendios   { background:#f8d7da; border:2px solid #c82333; color:#721c24; }
+
+    .triaje-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.6rem; margin-top:0.7rem; }
+    .triaje-card { border-radius:10px; padding:0.8rem 1rem; font-size:0.83rem; }
+    .triaje-rojo     { background:#f8d7da; border-left:5px solid #c82333; }
+    .triaje-amarillo { background:#fff3cd; border-left:5px solid #ffc107; }
+    .triaje-verde    { background:#d4edda; border-left:5px solid #28a745; }
+    .triaje-negro    { background:#e2e3e5; border-left:5px solid #343a40; }
+    .triaje-card strong { display:block; margin-bottom:0.2rem; }
+
+    .pas-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.7rem; margin-top:0.7rem; }
+    .pas-card { background:linear-gradient(135deg,#0077b6,#00b4d8); color:white; border-radius:12px; padding:1rem; text-align:center; }
+    .pas-letra  { font-size:2.2rem; font-weight:900; line-height:1; }
+    .pas-nombre { font-size:0.85rem; font-weight:700; margin:0.3rem 0 0.2rem; }
+    .pas-desc   { font-size:0.78rem; opacity:0.9; }
+
+    .org-lista { list-style:none; padding:0; margin-top:0.6rem; }
+    .org-lista li { display:flex; align-items:flex-start; gap:0.7rem; padding:0.55rem 0; border-bottom:1px dashed #d0eaf5; font-size:0.88rem; }
+    .org-lista li:last-child { border-bottom:none; }
+    .org-ambito { min-width:80px; font-size:0.72rem; font-weight:700; padding:0.2rem 0.5rem; border-radius:20px; text-align:center; flex-shrink:0; margin-top:0.05rem; }
+    .amb-int { background:#e0f7fa; color:#006d8f; }
+    .amb-eu  { background:#e8f5e9; color:#1a6e2e; }
+    .amb-es  { background:#fff0e0; color:#b85c00; }
+
+    .etapas-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.7rem; margin-top:0.7rem; }
+    .etapa-card { background:var(--color-fondo); border-radius:10px; padding:0.8rem 1rem; border-top:4px solid var(--color-primario); }
+    .etapa-card.naranja { border-top-color:var(--prl-naranja); }
+    .etapa-card.verde   { border-top-color:var(--prl-verde); }
+    .etapa-card.rojo    { border-top-color:var(--prl-rojo); }
+    .etapa-card .etapa-titulo { font-weight:800; font-size:0.9rem; color:var(--color-primario-oscuro); margin-bottom:0.4rem; }
+    .etapa-card.naranja .etapa-titulo { color:#b85c00; }
+    .etapa-card.verde   .etapa-titulo { color:#007a6a; }
+    .etapa-card.rojo    .etapa-titulo { color:#a41c25; }
+    .etapa-card li { font-size:0.82rem; color:var(--color-texto-suave); margin-bottom:0.15rem; }
+
+    @media (max-width:600px) {
+      .triaje-grid,.epi-grid,.etapas-grid,.pas-grid { grid-template-columns:1fr; }
+      .senales-grid { grid-template-columns:repeat(2,1fr); }
+      .tetraedro { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="tema-header">
+  <div class="numero-tema">2</div>
+  <p class="asignatura">Itinerario Personal para la Empleabilidad</p>
+  <h1>Prevención de Riesgos Laborales</h1>
+  <p class="subtitulo">Riesgos, daños, normativa, protección y primeros auxilios en el trabajo.</p>
+</header>
+
+<div class="contenedor">
+
+  <!-- 2.1 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">⚠️</span> 2.1 · Riesgo Profesional y Factores de Riesgo</div>
+    <div class="destacado">
+      <strong>Riesgo profesional</strong> = posibilidad de sufrir un daño por las condiciones del trabajo.<br>
+      <strong>Factor de riesgo</strong> = objeto, sustancia o característica que puede provocar ese daño.
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:0.7rem 0 0.5rem;">Los factores de riesgo provienen de 4 fuentes:</p>
+    <div class="tarjetas">
+      <div class="tarjeta"><div class="tarjeta-titulo">🏭 Condiciones estructurales</div><p>Máquinas, equipos, herramientas, electricidad, incendios → caídas, golpes, electrocución…</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">🌫️ Medio ambiental</div><p>Temperatura, humedad, agentes físicos/químicos → polvo, gases, virus, mala iluminación…</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">🧠 Carga de trabajo</div><p>Esfuerzo excesivo, malas posturas, tareas repetitivas, reparto incorrecto del trabajo.</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">👤 Circunstancias personales</div><p>Edad, estado de salud. Pueden empeorar el resto de riesgos.</p></div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:1rem 0 0.3rem;"><strong style="color:var(--color-primario-oscuro);">Método INSST — Nivel de riesgo = Probabilidad × Consecuencias:</strong></p>
+    <table class="tabla-riesgo">
+      <thead>
+      <tr><th></th><th>Liger. perjudicial</th><th>Perjudicial</th><th>Extrem. perjudicial</th></tr>
+      </thead>
+      <tbody>
+      <tr><th style="background:#e8f5ff;color:#0077b6;text-align:left;padding:0.4rem 0.7rem;">Prob. baja</th><td class="tr-verde">Trivial</td><td class="tr-amarillo">Tolerable</td><td class="tr-naranja">Moderado</td></tr>
+      <tr><th style="background:#e8f5ff;color:#0077b6;text-align:left;padding:0.4rem 0.7rem;">Prob. media</th><td class="tr-amarillo">Tolerable</td><td class="tr-naranja">Moderado</td><td class="tr-rojo">Importante</td></tr>
+      <tr><th style="background:#e8f5ff;color:#0077b6;text-align:left;padding:0.4rem 0.7rem;">Prob. alta</th><td class="tr-naranja">Moderado</td><td class="tr-rojo">Importante</td><td class="tr-rojof">Intolerable</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2.2 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🤕</span> 2.2 · Daños, Accidentes y Patologías</div>
+    <div class="tarjetas">
+      <div class="tarjeta" style="border-left-color:var(--prl-rojo);">
+        <div class="tarjeta-titulo" style="color:var(--prl-rojo);">🚨 Accidente de trabajo</div>
+        <p>Suceso brusco e inesperado con lesión. Incluye el <em>accidente in itinere</em> (trayecto) y el <em>accidente blanco</em> (sin lesión personal pero sí material).</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--prl-naranja);">
+        <div class="tarjeta-titulo" style="color:#b85c00;">🦠 Enfermedad profesional</div>
+        <p>Deterioro gradual por exposición crónica. Debe demostrarse relación causal con el trabajo. Recogida en el cuadro de la LGSS.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:#7b2d8b;">
+        <div class="tarjeta-titulo" style="color:#7b2d8b;">😓 Patologías inespecíficas</div>
+        <p>Agravadas por el trabajo pero no reconocidas como profesionales: <strong>fatiga</strong>, <strong>insatisfacción</strong>, <strong>estrés</strong>, <strong>burnout</strong>, <em>boreout</em>, <em>mobbing</em>, envejecimiento prematuro.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.3 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">⚖️</span> 2.3 · Marco Normativo — LPRL</div>
+    <div class="destacado">
+      <strong>LPRL</strong> (Ley de Prevención de Riesgos Laborales): lo que es <em>derecho</em> para el trabajador es <em>deber</em> para el empresario. La acción preventiva recae en el empresario.
+    </div>
+    <div class="tarjetas">
+      <div class="tarjeta" style="border-left-color:var(--prl-verde);">
+        <div class="tarjeta-titulo" style="color:#007a6a;">✅ Derechos del trabajador</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="font-size:0.82rem;padding:0.15rem 0;">🦺 EPI gratuitos y adecuados</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">📋 Formación e información</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">🗳️ Participación</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">🏥 Vigilancia de la salud</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">🚪 Abandonar puesto en riesgo grave</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">💸 Gratuidad de medidas preventivas</li>
+        </ul>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--prl-rojo);">
+        <div class="tarjeta-titulo" style="color:var(--prl-rojo);">🏢 Obligaciones del empresario</div>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="font-size:0.82rem;padding:0.15rem 0;">💰 Asumir costes preventivos</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">📝 Elaborar el Plan de Prevención</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">🔍 Evaluar y planificar riesgos</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">🦺 Proporcionar EPI</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">📚 Formación a trabajadores</li>
+          <li style="font-size:0.82rem;padding:0.15rem 0;">🧑‍🤝‍🧑 Proteger colectivos sensibles</li>
+        </ul>
+      </div>
+    </div>
+    <div class="recuerda" style="margin-top:1rem;">
+      <div class="recuerda-titulo">🧑‍🤝‍🧑 Colectivos especialmente protegidos</div>
+      <span class="tag">Trabajadores sensibles por salud</span>
+      <span class="tag">Trabajadores menores</span>
+      <span class="tag">Embarazadas / lactancia</span>
+      <span class="tag">Contratos temporales / ETT</span>
+    </div>
+  </div>
+
+  <!-- 2.4 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🔒</span> 2.4 · Riesgos Ligados a las Condiciones de Seguridad</div>
+    <div class="tarjetas">
+      <div class="tarjeta"><div class="tarjeta-titulo">🪑 Puestos de trabajo</div><p>Caídas, choques, cortes. Deben cumplir condiciones mínimas y ser accesibles para personas con discapacidad.</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">⚙️ Equipos de trabajo</div><p>Máquinas con marcado <strong>CE</strong>. Deben tener mandos visibles, resguardos y señalizaciones.</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">⚡ Riesgo eléctrico</div><p><strong>Contacto directo</strong> (parte activa) o <strong>indirecto</strong> (tensión accidental). Efectos: quemaduras, paro cardiaco.</p></div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:1rem 0 0.3rem;"><strong style="color:var(--color-primario-oscuro);">🔥 Incendios — Tetraedro del fuego (los 4 elementos necesarios):</strong></p>
+    <div class="tetraedro">
+      <div class="tetra-item"><strong>🌬️ Comburente</strong>Oxígeno del aire.</div>
+      <div class="tetra-item"><strong>🪵 Combustible</strong>Material sólido, líquido o gaseoso que arde.</div>
+      <div class="tetra-item"><strong>🌡️ Calor</strong>Energía para iniciar la combustión.</div>
+      <div class="tetra-item"><strong>🔄 Reacción en cadena</strong>Los 3 anteriores en proporciones adecuadas.</div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--color-texto-suave);margin:0.8rem 0 0.3rem;">Extinción: <span class="tag">Segregación</span><span class="tag">Sofocación (quitar O₂)</span><span class="tag">Enfriamiento (agua)</span><span class="tag">Inhibición (polvo)</span></p>
+    <div class="fuegos-grid">
+      <div class="fuego-card fuego-A"><div class="letra">A</div><strong>Sólidos</strong><br>madera, papel<br>→ Agua</div>
+      <div class="fuego-card fuego-B"><div class="letra">B</div><strong>Líquidos</strong><br>gasolina, aceites<br>→ Polvo/CO₂</div>
+      <div class="fuego-card fuego-C"><div class="letra">C</div><strong>Gases</strong><br>butano, propano<br>→ Polvo seco</div>
+      <div class="fuego-card fuego-D"><div class="letra">D</div><strong>Metales</strong><br>magnesio, sodio<br>→ Polvo especial</div>
+      <div class="fuego-card fuego-F"><div class="letra">F/K</div><strong>Cocina</strong><br>aceites vegetales<br>→ Acetato K</div>
+    </div>
+  </div>
+
+  <!-- 2.5 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🌿</span> 2.5 · Riesgos del Medio Ambiente de Trabajo</div>
+    <div class="tarjetas">
+      <div class="tarjeta"><div class="tarjeta-titulo">🔊 Agentes físicos</div>
+        <ul style="list-style:none;padding:0;margin:0;font-size:0.82rem;color:var(--color-texto-suave);">
+          <li>🔉 Ruido → límite: 87 dB/8h</li>
+          <li>📳 Vibraciones → en Hz y m/s²</li>
+          <li>💡 Iluminación → en lux</li>
+          <li>🌡️ Temperatura → 14–27 °C</li>
+          <li>☢️ Radiaciones ionizantes / no ionizantes</li>
+        </ul>
+      </div>
+      <div class="tarjeta"><div class="tarjeta-titulo">🧪 Agentes químicos</div>
+        <p style="font-size:0.82rem;">Sustancias artificiales o naturales que dañan el organismo al absorberse. Vías de entrada:</p>
+        <span class="tag">🫁 Respiratoria (principal)</span><span class="tag">🖐️ Dérmica</span><span class="tag">👄 Digestiva</span><span class="tag">🩺 Parenteral</span>
+      </div>
+      <div class="tarjeta"><div class="tarjeta-titulo">🦠 Agentes biológicos</div>
+        <p style="font-size:0.82rem;">Seres vivos que causan infección, alergia o toxicidad. 4 grupos según riesgo (grupo 4 = sin tratamiento conocido).</p>
+        <p style="font-size:0.8rem;margin-top:0.3rem;">Bacterias · Virus · Hongos · Protozoos · Parásitos</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.6 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🧠</span> 2.6 · Carga de Trabajo y Factores Psicosociales</div>
+    <div class="tarjetas">
+      <div class="tarjeta" style="border-left-color:#7b2d8b;"><div class="tarjeta-titulo" style="color:#7b2d8b;">⚖️ Carga de trabajo</div><p>Puede ser <strong>física</strong> (posturas, cargas) o <strong>mental</strong> (atención, concentración). Cuando se cronifica → fatiga permanente → deterioro de la salud.</p></div>
+      <div class="tarjeta" style="border-left-color:var(--prl-rojo);"><div class="tarjeta-titulo" style="color:var(--prl-rojo);">😰 Consecuencias</div>
+        <ul style="list-style:none;padding:0;margin:0;font-size:0.83rem;color:var(--color-texto-suave);">
+          <li>🔥 <strong>Burnout</strong>: síndrome del quemado</li>
+          <li>😴 <strong>Boreout</strong>: malestar por aburrimiento</li>
+          <li>😤 <strong>Estrés laboral</strong>: sobrecarga / incapacidad</li>
+          <li>👊 <strong>Mobbing</strong>: acoso laboral</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.7 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🛡️</span> 2.7 · Prevención, Protección y Señalización</div>
+    <div class="tarjetas">
+      <div class="tarjeta" style="border-left-color:var(--prl-verde);"><div class="tarjeta-titulo" style="color:#007a6a;">🚧 Medidas de PREVENCIÓN</div><p style="font-size:0.82rem;"><em>Actúan sobre el origen del riesgo para eliminarlo.</em><br>Seguridad · Higiene industrial · Ergonomía · Psicosociología · Política social · Medicina laboral</p></div>
+      <div class="tarjeta" style="border-left-color:var(--prl-naranja);"><div class="tarjeta-titulo" style="color:#b85c00;">🦺 Medidas de PROTECCIÓN</div><p style="font-size:0.82rem;"><em>El riesgo existe; se reduce el daño.</em><br><strong>Colectiva:</strong> barandillas, redes, resguardos, interruptores, señalización.<br><strong>Individual (EPI):</strong> obligatorio, homologado, marcado CE.</p></div>
+    </div>
+    <div class="epi-grid" style="margin-top:1rem;">
+      <div class="epi-card epi-1"><div class="cat-num" style="color:#2e7d32;">Cat. 1</div><strong style="font-size:0.83rem;">Riesgos mínimos</strong><p>Guantes jardín, gafas sol, botas normales.</p></div>
+      <div class="epi-card epi-2"><div class="cat-num" style="color:#f57f17;">Cat. 2</div><strong style="font-size:0.83rem;">Riesgos elevados</strong><p>Casco, ropa y calzado de seguridad, protección auditiva.</p></div>
+      <div class="epi-card epi-3"><div class="cat-num" style="color:#b71c1c;">Cat. 3</div><strong style="font-size:0.83rem;">Riesgo mortal</strong><p>Equipos respiratorios, anti-caídas, protección eléctrica.</p></div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:1rem 0 0.3rem;"><strong style="color:var(--color-primario-oscuro);">Señales de seguridad (RD 485/1997):</strong></p>
+    <div class="senales-grid">
+      <div class="senal-item senal-prohibicion">⛔ <strong>Prohibición</strong><br>Círculo rojo / fondo blanco</div>
+      <div class="senal-item senal-advertencia">⚠️ <strong>Advertencia</strong><br>Triángulo amarillo</div>
+      <div class="senal-item senal-obligacion">🔵 <strong>Obligación</strong><br>Círculo azul</div>
+      <div class="senal-item senal-salvamento">🟩 <strong>Salvamento</strong><br>Rectángulo verde</div>
+      <div class="senal-item senal-incendios">🔴 <strong>Incendios</strong><br>Rectángulo rojo</div>
+    </div>
+  </div>
+
+  <!-- 2.8 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🚨</span> 2.8 · Planes de Emergencia y Evacuación</div>
+    <div class="tarjetas">
+      <div class="tarjeta"><div class="tarjeta-titulo">📄 Plan de emergencia</div><p>Obligatorio para TODAS las empresas con trabajadores por cuenta ajena (art. 20 LPRL). Uso interno. Responde: ¿qué? ¿quién? ¿cuándo? ¿cómo? ¿dónde?</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">📋 Plan de autoprotección</div><p>Empresas con actividades generadoras de riesgo (RD 393/2007). Se revisa cada <strong>3 años</strong> y se registra en la CCAA.</p></div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:0.9rem 0 0.3rem;"><strong style="color:var(--color-primario-oscuro);">Tipos de emergencia según gravedad:</strong></p>
+    <div class="pasos">
+      <div class="paso"><div class="paso-num" style="background:#2ec4b6;">1</div><div class="paso-contenido"><strong>Conato de emergencia</strong><span>Zona reducida. Se controla con medios propios y sin problemas.</span></div></div>
+      <div class="paso"><div class="paso-num" style="background:#f4a261;">2</div><div class="paso-contenido"><strong>Emergencia parcial</strong><span>Requiere equipos del sector. Puede haber evacuación parcial.</span></div></div>
+      <div class="paso"><div class="paso-num" style="background:#e63946;">3</div><div class="paso-contenido"><strong>Emergencia general (total)</strong><span>Todos los medios propios + ayuda externa. Puede haber evacuación total.</span></div></div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:0.9rem 0 0.3rem;"><strong style="color:var(--color-primario-oscuro);">Consignas de actuación:</strong> <span class="tag">🔔 Activar alarma (CCE)</span> <span class="tag">🧯 Intervención de equipos</span> <span class="tag">🚶 Evacuación ordenada</span></p>
+  </div>
+
+  <!-- 2.11 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🏛️</span> 2.11 · Organismos de Seguridad y Salud</div>
+    <ul class="org-lista">
+      <li><span class="org-ambito amb-int">🌐 Internacional</span><div><strong>OIT</strong> — Elabora y supervisa normas internacionales del trabajo.</div></li>
+      <li><span class="org-ambito amb-eu">🇪🇺 Europeo</span><div><strong>Agencia Europea S&amp;ST</strong> — Sede en Bilbao. Fomenta la mejora del entorno laboral.</div></li>
+      <li><span class="org-ambito amb-es">🇪🇸 Estatal</span><div><strong>Comisión Nacional S&amp;ST</strong> — Asesora a las AAPP en políticas de prevención.</div></li>
+      <li><span class="org-ambito amb-es">🇪🇸 Estatal</span><div><strong>INSST</strong> — Asesoramiento, estudio y formación en PRL. Depende del Ministerio de Trabajo.</div></li>
+      <li><span class="org-ambito amb-es">🇪🇸 Estatal</span><div><strong>Inspección de Trabajo</strong> — Vigila normativa, asesora y puede paralizar trabajos con riesgo grave e inminente.</div></li>
+    </ul>
+  </div>
+
+  <!-- 2.12 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">📊</span> 2.12 · Organización del Trabajo Preventivo</div>
+    <div class="etapas-grid">
+      <div class="etapa-card"><div class="etapa-titulo">🗂️ Organización</div><ul><li>Organización de trabajadores y empresa</li><li>Plan de emergencia</li></ul></div>
+      <div class="etapa-card naranja"><div class="etapa-titulo">📅 Planificación</div><ul><li>Planificación de la acción preventiva</li><li>Evaluación de los riesgos</li></ul></div>
+      <div class="etapa-card verde"><div class="etapa-titulo">🔍 Control</div><ul><li>Documentación</li><li>Auditorías</li><li>Seguimiento de objetivos</li></ul></div>
+      <div class="etapa-card rojo"><div class="etapa-titulo">⚙️ Ejecución</div><ul><li>Formación e información</li><li>Implantación de medidas</li><li>Vigilancia médica</li><li>Plan de prevención</li></ul></div>
+    </div>
+    <div class="recuerda" style="margin-top:1rem;">
+      <div class="recuerda-titulo">👥 Representantes de los trabajadores en prevención</div>
+      <strong>Delegados de prevención:</strong> obligatorios desde 11 trabajadores. Número según plantilla (de 1 a 8 delegados).<br>
+      <strong>Comité de S&amp;ST:</strong> obligatorio en empresas con 50+ trabajadores. Reunión trimestral.
+    </div>
+  </div>
+
+  <!-- 2.14 -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🏥</span> 2.14 · Primeros Auxilios</div>
+    <div class="pas-grid">
+      <div class="pas-card"><div class="pas-letra">P</div><div class="pas-nombre">PROTEGER</div><div class="pas-desc">Asegurarse de que el lugar sea seguro antes de actuar.</div></div>
+      <div class="pas-card"><div class="pas-letra">A</div><div class="pas-nombre">AVISAR</div><div class="pas-desc">Llamar a emergencias: ubicación, nº de heridos y estado.</div></div>
+      <div class="pas-card"><div class="pas-letra">S</div><div class="pas-nombre">SOCORRER</div><div class="pas-desc">Mantener respiración y circulación. SVB si es necesario.</div></div>
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:1rem 0 0.3rem;"><strong style="color:var(--color-primario-oscuro);">Triaje — Prioridad por colores:</strong></p>
+    <div class="triaje-grid">
+      <div class="triaje-card triaje-rojo"><strong>🔴 ROJO — Prioridad I</strong>Graves pero recuperables. Atención inmediata.</div>
+      <div class="triaje-card triaje-amarillo"><strong>🟡 AMARILLO — Prioridad II</strong>Graves pero estables. Pueden esperar un poco.</div>
+      <div class="triaje-card triaje-verde"><strong>🟢 VERDE — Prioridad III</strong>Leves. Sin urgencia hospitalaria inmediata.</div>
+      <div class="triaje-card triaje-negro"><strong>⚫ NEGRO — Prioridad IIII</strong>Fallecidos o pocas posibilidades de supervivencia.</div>
+    </div>
+    <div class="recuerda" style="margin-top:1rem;">
+      <div class="recuerda-titulo">❤️ RCP (Reanimación Cardiopulmonar)</div>
+      <strong>Ritmo:</strong> <span class="tag naranja">30 compresiones</span> + <span class="tag naranja">2 insuflaciones</span> · Frecuencia: <strong>100 compresiones/min</strong> · Profundidad: 3,5–5 cm
+    </div>
+    <p style="font-size:0.88rem;color:var(--color-texto-suave);margin:0.9rem 0 0.4rem;"><strong style="color:var(--color-primario-oscuro);">Otras urgencias:</strong></p>
+    <div class="tarjetas">
+      <div class="tarjeta"><div class="tarjeta-titulo">🔥 Quemaduras</div><p style="font-size:0.82rem;">1º (epidermis) · 2º (ampollas) · 3º (tejido profundo). Enfriar 10 min con agua, cubrir, no tocar ampollas, no cremas, buscar atención médica.</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">🩸 Hemorragias</div><p style="font-size:0.82rem;">Compresión directa → compresión arterial → torniquete (último recurso, con nota de hora).</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">🦴 Traumatismos</div><p style="font-size:0.82rem;"><strong>Fractura · Esguince · Luxación · Contusión.</strong> Inmovilizar, frío con piel protegida, no mover sin riesgo vital.</p></div>
+      <div class="tarjeta"><div class="tarjeta-titulo">😮 Heimlich</div><p style="font-size:0.82rem;">Obstrucción de vías aéreas. Compresiones abdominales hacia arriba y adentro desde detrás de la víctima.</p></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="pie">
+  IPEI · Tema 2 — Prevención de Riesgos Laborales &nbsp;|&nbsp; Resumen visual para estudio
+</footer>
+
+</body>
+</html>

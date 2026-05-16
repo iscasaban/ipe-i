@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tema 5 · Estrategias de Aprendizaje Autónomo</title>
+  <link rel="stylesheet" href="/estilos.css" />
+  <style>
+    /* ===== COLORES PROPIOS DEL TEMA 5 ===== */
+    :root {
+      --t5-verde:   #2ec4b6;
+      --t5-naranja: #f4a261;
+      --t5-rojo:    #e63946;
+      --t5-morado:  #7b2d8b;
+      --t5-azul:    #00b4d8;
+      --t5-lima:    #52b788;
+    }
+
+    /* ===== COMPETENCIAS TRANSVERSALES ===== */
+    .transv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .transv-card {
+      border-radius: 10px;
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    .tv-1 { background: #e0f7fa; border-top: 4px solid var(--t5-azul); }
+    .tv-2 { background: #e8f5e9; border-top: 4px solid var(--t5-verde); }
+    .tv-3 { background: #fff0e0; border-top: 4px solid var(--t5-naranja); }
+    .tv-4 { background: #fce4ec; border-top: 4px solid var(--t5-rojo); }
+    .tv-5 { background: #f3e5f5; border-top: 4px solid var(--t5-morado); }
+    .tv-6 { background: #e8f5e9; border-top: 4px solid var(--t5-lima); }
+    .transv-card .tv-icon { font-size: 1.5rem; }
+    .transv-card strong { display: block; font-size: 0.83rem; margin: 0.2rem 0 0.1rem; color: var(--color-primario-oscuro); }
+    .transv-card span { font-size: 0.74rem; color: var(--color-texto-suave); }
+
+    /* ===== CARACTERÍSTICAS EMPLEABILIDAD ===== */
+    .empl-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+      margin-top: 0.7rem;
+    }
+    .empl-card {
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      border-left: 4px solid var(--color-primario);
+      background: var(--color-fondo);
+    }
+    .empl-card strong { display: block; font-size: 0.87rem; color: var(--color-primario-oscuro); margin-bottom: 0.2rem; }
+
+    /* ===== ADAPTACIÓN — RAZONES ===== */
+    .adapt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+      margin-top: 0.7rem;
+    }
+    .adapt-card {
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      font-size: 0.82rem;
+    }
+    .ad-1 { background: #e0f7fa; border-left: 5px solid var(--t5-azul); }
+    .ad-2 { background: #e8f5e9; border-left: 5px solid var(--t5-verde); }
+    .ad-3 { background: #fff0e0; border-left: 5px solid var(--t5-naranja); }
+    .ad-4 { background: #f3e5f5; border-left: 5px solid var(--t5-morado); }
+    .ad-5 { background: #fce4ec; border-left: 5px solid var(--t5-rojo); }
+    .adapt-card strong { display: block; font-size: 0.87rem; color: var(--color-primario-oscuro); margin-bottom: 0.2rem; }
+
+    /* ===== PLE — 5 FUNCIONES ===== */
+    .ple-func {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.7rem;
+    }
+    .ple-f-item {
+      flex: 1 1 130px;
+      border-radius: 10px;
+      padding: 0.75rem 0.7rem;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+    .pf-1 { background: #e0f7fa; border-bottom: 4px solid var(--t5-azul); }
+    .pf-2 { background: #e8f5e9; border-bottom: 4px solid var(--t5-verde); }
+    .pf-3 { background: #fff0e0; border-bottom: 4px solid var(--t5-naranja); }
+    .pf-4 { background: #f3e5f5; border-bottom: 4px solid var(--t5-morado); }
+    .pf-5 { background: #fce4ec; border-bottom: 4px solid var(--t5-rojo); }
+    .ple-f-item .pf-icon { font-size: 1.4rem; }
+    .ple-f-item strong { display: block; font-size: 0.82rem; margin: 0.2rem 0 0.1rem; }
+    .ple-f-item span { font-size: 0.73rem; color: var(--color-texto-suave); }
+
+    /* ===== HERRAMIENTAS PLE (tabla) ===== */
+    .herr-tabla {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-top: 0.8rem;
+    }
+    .herr-tabla th {
+      background: var(--color-primario);
+      color: white;
+      padding: 0.5rem 0.8rem;
+      text-align: left;
+      font-weight: 700;
+    }
+    .herr-tabla td {
+      padding: 0.45rem 0.8rem;
+      border-bottom: 1px solid #d0eaf5;
+      color: var(--color-texto-suave);
+      vertical-align: top;
+    }
+    .herr-tabla tr:nth-child(even) td { background: #f5fbff; }
+    .herr-tabla .cat-badge {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+    .cat-busq  { background: #e0f7fa; color: #006d8f; }
+    .cat-org   { background: #e8f5e9; color: #2e7d32; }
+    .cat-crea  { background: #fff0e0; color: #b85c00; }
+    .cat-colab { background: #f3e5f5; color: #6a1b9a; }
+    .cat-eval  { background: #fce4ec; color: #880e4f; }
+
+    /* ===== DISEÑO PLE — 6 PASOS ===== */
+    .ple-pasos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .ple-paso {
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .pp-1 { background: #e0f7fa; border-top: 4px solid var(--t5-azul); }
+    .pp-2 { background: #e8f5e9; border-top: 4px solid var(--t5-verde); }
+    .pp-3 { background: #fff0e0; border-top: 4px solid var(--t5-naranja); }
+    .pp-4 { background: #f3e5f5; border-top: 4px solid var(--t5-morado); }
+    .pp-5 { background: #fce4ec; border-top: 4px solid var(--t5-rojo); }
+    .pp-6 { background: #e8f5e9; border-top: 4px solid var(--t5-lima); }
+    .ple-paso .pp-num {
+      font-family: var(--fuente-titulo);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--color-primario-oscuro);
+      opacity: 0.35;
+      line-height: 1;
+    }
+    .ple-paso strong { display: block; font-size: 0.83rem; margin: 0.2rem 0; color: var(--color-primario-oscuro); }
+    .ple-paso span { font-size: 0.74rem; color: var(--color-texto-suave); }
+
+    /* ===== IDENTIDAD DIGITAL ===== */
+    .id-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+      margin-top: 0.7rem;
+    }
+    .id-card {
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+    }
+    .id-1 { background: #e0f7fa; border-left: 5px solid var(--t5-azul); }
+    .id-2 { background: #e8f5e9; border-left: 5px solid var(--t5-verde); }
+    .id-3 { background: #fff0e0; border-left: 5px solid var(--t5-naranja); }
+    .id-4 { background: #f3e5f5; border-left: 5px solid var(--t5-morado); }
+    .id-5 { background: #fce4ec; border-left: 5px solid var(--t5-rojo); }
+    .id-card strong { display: block; font-size: 0.87rem; color: var(--color-primario-oscuro); margin-bottom: 0.2rem; }
+
+    /* ===== FODA ===== */
+    .foda-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .foda-card {
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+    }
+    .foda-f { background: #e0f7fa; border-top: 4px solid var(--t5-azul); }
+    .foda-d { background: #fce4ec; border-top: 4px solid var(--t5-rojo); }
+    .foda-o { background: #e8f5e9; border-top: 4px solid var(--t5-verde); }
+    .foda-a { background: #fff3cd; border-top: 4px solid var(--t5-naranja); }
+    .foda-card strong { display: block; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .foda-card li { margin-bottom: 0.2rem; color: var(--color-texto-suave); }
+
+    /* ===== PDI PASOS ===== */
+    .pdi-pasos {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+
+    /* ===== PLATAFORMAS APRENDIZAJE ===== */
+    .plat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+      margin-top: 0.7rem;
+    }
+    .plat-card {
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      font-size: 0.82rem;
+    }
+    .pl-1 { background: #e0f7fa; border-left: 4px solid var(--t5-azul); }
+    .pl-2 { background: #e8f5e9; border-left: 4px solid var(--t5-verde); }
+    .pl-3 { background: #fff0e0; border-left: 4px solid var(--t5-naranja); }
+    .pl-4 { background: #f3e5f5; border-left: 4px solid var(--t5-morado); }
+    .plat-card strong { display: block; font-size: 0.87rem; color: var(--color-primario-oscuro); margin-bottom: 0.25rem; }
+    .plat-card .app-tag {
+      display: inline-block;
+      background: rgba(0,0,0,0.07);
+      border-radius: 20px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.74rem;
+      margin: 0.1rem 0.1rem 0 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:600px){
+      .transv-grid { grid-template-columns: repeat(2, 1fr); }
+      .empl-grid, .adapt-grid, .id-grid, .foda-grid, .plat-grid { grid-template-columns: 1fr; }
+      .ple-pasos { grid-template-columns: repeat(2, 1fr); }
+      .ple-func .ple-f-item { flex: 1 1 40%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CABECERA -->
+<header class="tema-header">
+  <div class="numero-tema">5</div>
+  <p class="asignatura">Itinerario Personal para la Empleabilidad</p>
+  <h1>Estrategias de Aprendizaje Autónomo</h1>
+  <p class="subtitulo">Competencias · Empleabilidad · Adaptación · PLE · Identidad digital · PDI · Herramientas</p>
+</header>
+
+<div class="contenedor">
+
+  <!-- 5.1 APRENDIZAJE AUTÓNOMO Y COMPETENCIAS -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🧩</span> 5.1 · Aprendizaje Autónomo y Competencias</div>
+    <div class="destacado">
+      <strong>Aprendizaje autónomo</strong> = tomar control y responsabilidad sobre tu propio proceso de aprendizaje. Implica definir qué aprender, establecer metas, seleccionar recursos, planificar el estudio y evaluar el progreso.
+    </div>
+
+    <div class="tarjetas" style="margin-top:0.7rem;">
+      <div class="tarjeta" style="border-left-color:var(--t5-azul);">
+        <div class="tarjeta-titulo" style="color:var(--t5-azul);">🔧 Competencias técnicas</div>
+        <p>Habilidades específicas de una tarea o profesión. Ej.: programación, contabilidad, diseño.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--t5-verde);">
+        <div class="tarjeta-titulo" style="color:var(--t5-verde);">🤝 Competencias blandas</div>
+        <p>Habilidades interpersonales y de gestión personal. Ej.: comunicación, trabajo en equipo, resolución de problemas.</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Competencias transversales que desarrolla el aprendizaje autónomo:</p>
+    <div class="transv-grid">
+      <div class="transv-card tv-1"><div class="tv-icon">⏱️</div><strong>Autogestión</strong><span>Gestionar tiempo, prioridades y plazos eficazmente</span></div>
+      <div class="transv-card tv-2"><div class="tv-icon">🔍</div><strong>Pensamiento crítico</strong><span>Evaluar información y tomar decisiones objetivas</span></div>
+      <div class="transv-card tv-3"><div class="tv-icon">🔄</div><strong>Adaptabilidad</strong><span>Flexibilidad ante métodos y recursos cambiantes</span></div>
+      <div class="transv-card tv-4"><div class="tv-icon">✅</div><strong>Responsabilidad</strong><span>Compromiso y cumplimiento con los propios objetivos</span></div>
+      <div class="transv-card tv-5"><div class="tv-icon">🔥</div><strong>Motivación intrínseca</strong><span>Aprender por interés y satisfacción personal</span></div>
+      <div class="transv-card tv-6"><div class="tv-icon">📈</div><strong>Desarrollo continuo</strong><span>Impulso para seguir mejorando a lo largo de la carrera</span></div>
+    </div>
+
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Cómo fomentar el aprendizaje autónomo:</p>
+    <div class="pasos">
+      <div class="paso"><div class="paso-num">1</div><div class="paso-contenido"><strong>Establece metas claras</strong><span>Define qué quieres aprender y metas específicas y alcanzables.</span></div></div>
+      <div class="paso"><div class="paso-num">2</div><div class="paso-contenido"><strong>Planifica tu tiempo</strong><span>Crea un horario de estudio con tiempo para revisión, práctica y descanso.</span></div></div>
+      <div class="paso"><div class="paso-num">3</div><div class="paso-contenido"><strong>Busca recursos adecuados</strong><span>Libros, artículos, vídeos, cursos en línea, foros. Diversifica tus fuentes.</span></div></div>
+      <div class="paso"><div class="paso-num">4</div><div class="paso-contenido"><strong>Evalúa tu progreso</strong><span>Revisa regularmente y usa herramientas de autoevaluación. Pide feedback.</span></div></div>
+      <div class="paso"><div class="paso-num">5</div><div class="paso-contenido"><strong>Mantén la motivación</strong><span>Recompénsate, únete a grupos de estudio o busca mentores.</span></div></div>
+    </div>
+  </div>
+
+  <!-- 5.2 CONCEPTO DE EMPLEABILIDAD -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">💼</span> 5.2 · El Concepto de Empleabilidad</div>
+    <div class="destacado">
+      <strong>Empleabilidad</strong> = conjunto de competencias, habilidades y actitudes que permiten entrar en el mercado laboral, mantener un empleo, adaptarse y progresar en la carrera. Es un concepto <strong>dinámico y continuo</strong>.
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.8rem 0 0.3rem;">Características clave (autoliderazgo):</p>
+    <div class="empl-grid">
+      <div class="empl-card" style="border-color:var(--t5-azul);">
+        <strong>🧠 Disposición psicológica de autoliderazgo</strong>
+        Ver el desempleo o la transición como oportunidad de crecimiento. Gestionar emociones y mantener actitud positiva.
+      </div>
+      <div class="empl-card" style="border-color:var(--t5-verde);">
+        <strong>🚀 Responsabilidad y proactividad</strong>
+        Hacerse cargo de la propia búsqueda de empleo. No esperar oportunidades: anticiparse y buscarlas.
+      </div>
+      <div class="empl-card" style="border-color:var(--t5-naranja);">
+        <strong>🪞 Desarrollo del autoconocimiento</strong>
+        Diferenciarse de los demás. Conocer puntos fuertes y áreas de mejora. Evaluar logros en cada transición laboral.
+      </div>
+      <div class="empl-card" style="border-color:var(--t5-morado);">
+        <strong>📚 Voluntad de seguir aprendiendo</strong>
+        Adquirir continuamente nuevos conocimientos. Atento a las necesidades del mercado y a las nuevas tecnologías.
+      </div>
+      <div class="empl-card" style="border-color:var(--t5-rojo);">
+        <strong>🌐 Cultivo de relaciones profesionales</strong>
+        Generar redes de confianza. Compartir información, ser colaborativo y cuidar la imagen profesional.
+      </div>
+      <div class="empl-card" style="border-color:var(--t5-lima);">
+        <strong>🛠️ Dominio de herramientas de búsqueda</strong>
+        Optimizar el CV y la presentación personal. Uso eficiente de teléfono, Internet, redes sociales profesionales.
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.3 CAPACIDAD DE ADAPTACIÓN -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🔄</span> 5.3 · Capacidad de Adaptación para la Empleabilidad</div>
+    <div class="destacado">
+      <strong>Capacidad de adaptación</strong> = habilidad de ajustarse a nuevas condiciones, cambios y desafíos. Implica ser flexible, abierto al aprendizaje y capaz de modificar comportamientos ante situaciones inesperadas.
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.8rem 0 0.3rem;">¿Por qué es crucial?</p>
+    <div class="adapt-grid">
+      <div class="adapt-card ad-1"><strong>🌍 Entornos en constante cambio</strong>Globalización, tecnología y tendencias económicas cambian el mercado. Quien se adapta, mantiene su empleo.</div>
+      <div class="adapt-card ad-2"><strong>💻 Innovación y tecnología</strong>Aprender nuevas herramientas y software te hace más valioso para los empleadores.</div>
+      <div class="adapt-card ad-3"><strong>📈 Desarrollo profesional continuo</strong>Los adaptables adquieren más habilidades y asumen roles más desafiantes.</div>
+      <div class="adapt-card ad-4"><strong>🧩 Resolución de problemas</strong>Enfrentar desafíos, encontrar soluciones creativas y tomar decisiones en la incertidumbre.</div>
+      <div class="adapt-card ad-5"><strong>🤝 Relaciones y trabajo en equipo</strong>Trabajar bien con personas diversas y en distintos entornos.</div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Cómo desarrollarla:</p>
+    <ul class="lista-check">
+      <li><b>Mentalidad abierta:</b> acepta nuevas ideas y enfoques. Sé receptivo a los cambios.</li>
+      <li><b>Aprendizaje continuo:</b> cursos, talleres, seminarios y lectura relevante para tu campo.</li>
+      <li><b>Proactividad:</b> anticipa cambios y prepárate antes de que te afecten.</li>
+      <li><b>Resolución de problemas:</b> practica tomar decisiones en situaciones de incertidumbre.</li>
+      <li><b>Resiliencia:</b> recupérate de las dificultades con actitud positiva.</li>
+    </ul>
+  </div>
+
+  <!-- 5.4 EL PLE -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🌐</span> 5.4 · El Entorno Personal de Aprendizaje (PLE)</div>
+    <div class="destacado">
+      <strong>PLE</strong> (Personal Learning Environment) = conjunto de herramientas, recursos y estrategias que una persona usa para gestionar su propio aprendizaje de forma autónoma y personalizada.
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.8rem 0 0.3rem;">¿Para qué sirve el PLE?</p>
+    <div class="ple-func">
+      <div class="ple-f-item pf-1"><div class="pf-icon">🔎</div><strong>Acceder a info</strong><span>Buscar y encontrar información relevante</span></div>
+      <div class="ple-f-item pf-2"><div class="pf-icon">🗂️</div><strong>Organizar conocimiento</strong><span>Clasificar y estructurar la información</span></div>
+      <div class="ple-f-item pf-3"><div class="pf-icon">✏️</div><strong>Crear contenido</strong><span>Producir notas, resúmenes y proyectos</span></div>
+      <div class="ple-f-item pf-4"><div class="pf-icon">💬</div><strong>Colaborar y comunicar</strong><span>Interactuar y compartir con otros</span></div>
+      <div class="ple-f-item pf-5"><div class="pf-icon">📊</div><strong>Reflexionar y evaluar</strong><span>Evaluar el progreso y los logros</span></div>
+    </div>
+
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Herramientas para crear tu PLE:</p>
+    <table class="herr-tabla">
+      <thead><tr><th>Categoría</th><th>Herramientas</th></tr></thead>
+      <tbody>
+      <tr><td><span class="cat-badge cat-busq">🔍 Búsqueda e info</span></td><td>Google · Bing · Google Scholar · PubMed · Project Gutenberg</td></tr>
+      <tr><td><span class="cat-badge cat-org">🗂️ Organización</span></td><td>Evernote · OneNote · Google Keep · Zotero · MindMeister · XMind</td></tr>
+      <tr><td><span class="cat-badge cat-crea">✏️ Creación</span></td><td>Word · Google Docs · PowerPoint · Google Slides · Prezi · Canva</td></tr>
+      <tr><td><span class="cat-badge cat-colab">💬 Colaboración</span></td><td>Slack · Microsoft Teams · Trello · LinkedIn · Reddit · Quora</td></tr>
+      <tr><td><span class="cat-badge cat-eval">📊 Evaluación</span></td><td>Penzu · Mahara · WordPress · Google Forms · SurveyMonkey</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5.5 DISEÑO DEL PLE DIGITAL -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🗺️</span> 5.5 · Diseño del PLE Propio en Entorno Digital</div>
+    <div class="ple-pasos">
+      <div class="ple-paso pp-1"><div class="pp-num">1</div><strong>Definir objetivos</strong><span>¿Qué habilidades quieres adquirir? ¿Meta a corto, medio y largo plazo?</span></div>
+      <div class="ple-paso pp-2"><div class="pp-num">2</div><strong>Seleccionar recursos</strong><span>Coursera · Udemy · YouTube · Khan Academy · Medium · TechCrunch</span></div>
+      <div class="ple-paso pp-3"><div class="pp-num">3</div><strong>Organizar contenido</strong><span>Carpetas temáticas · Google Drive · Dropbox · Google Calendar</span></div>
+      <div class="ple-paso pp-4"><div class="pp-num">4</div><strong>Interacción y networking</strong><span>LinkedIn · Reddit · Quora · Meetup · Slack / Discord</span></div>
+      <div class="ple-paso pp-5"><div class="pp-num">5</div><strong>Crear y publicar</strong><span>WordPress · Medium · Canva · Adobe Spark · Behance</span></div>
+      <div class="ple-paso pp-6"><div class="pp-num">6</div><strong>Evaluar y mejorar</strong><span>Revisión mensual · feedback · actualizar recursos obsoletos</span></div>
+    </div>
+    <div class="recuerda" style="margin-top:0.9rem;">
+      <div class="recuerda-titulo">💡 Ejemplo PLE — Diseño gráfico</div>
+      <b>Cursos:</b> Coursera + Udemy (Adobe Illustrator) · <b>Notas:</b> Evernote · <b>Tareas:</b> Trello · <b>Red:</b> LinkedIn + Reddit r/Design · <b>Publicación:</b> WordPress + Canva
+    </div>
+  </div>
+
+  <!-- 5.6 IDENTIDAD DIGITAL -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">👤</span> 5.6 · Identidad Digital y Empleabilidad</div>
+    <div class="destacado">
+      <strong>Identidad digital</strong> = conjunto de información sobre una persona disponible en línea: datos personales, perfil profesional, actividad en redes, participación en comunidades y contenido generado.
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.8rem 0 0.3rem;">Impacto en la empleabilidad:</p>
+    <div class="id-grid">
+      <div class="id-card id-1"><strong>👁️ Primera impresión</strong>Los reclutadores buscan candidatos online antes de la entrevista. Un perfil bien gestionado aumenta las probabilidades.</div>
+      <div class="id-card id-2"><strong>🏅 Reflejo de profesionalidad</strong>LinkedIn actualizado y publicaciones relevantes demuestran compromiso con el desarrollo profesional.</div>
+      <div class="id-card id-3"><strong>🌐 Red de contactos</strong>Una identidad digital cuidada abre puertas a oportunidades laborales y colaboraciones.</div>
+      <div class="id-card id-4"><strong>🎯 Demostración de habilidades</strong>Artículos, proyectos y debates en línea muestran competencias actualizadas.</div>
+      <div class="id-card id-5"><strong>🔗 Consistencia y coherencia</strong>La identidad digital debe ser coherente con el CV. Las contradicciones generan desconfianza.</div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Cómo gestionarla:</p>
+    <ul class="lista-check">
+      <li><b>Crear y mantener perfiles profesionales</b> (LinkedIn completo, foto profesional, resumen de fortalezas).</li>
+      <li><b>Gestionar la privacidad</b> en redes personales. Revisa qué ven los empleadores.</li>
+      <li><b>Participar en comunidades profesionales</b> con contenido de valor.</li>
+      <li><b>Publicar artículos y proyectos</b> en LinkedIn, Medium o tu propio blog.</li>
+      <li><b>Monitorear tu presencia en línea</b>: busca tu nombre en Google periódicamente.</li>
+    </ul>
+  </div>
+
+  <!-- 5.8 PLAN DE DESARROLLO INDIVIDUAL (PDI) -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">📋</span> 5.8 · Plan de Desarrollo Individual (PDI)</div>
+    <div class="destacado">
+      <strong>PDI</strong> = herramienta estratégica para identificar metas profesionales y personales, y trazar un camino claro para alcanzarlas mejorando la empleabilidad.
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.8rem 0 0.3rem;">Paso 1 — Análisis FODA (autoevaluación):</p>
+    <div class="foda-grid">
+      <div class="foda-card foda-f">
+        <strong>💪 Fortalezas</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>✦ Habilidades técnicas en las que destacas</li>
+          <li>✦ Competencias blandas desarrolladas</li>
+        </ul>
+      </div>
+      <div class="foda-card foda-d">
+        <strong>⚠️ Debilidades</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>✦ Áreas que necesitas mejorar</li>
+          <li>✦ Limitaciones que frenan tu crecimiento</li>
+        </ul>
+      </div>
+      <div class="foda-card foda-o">
+        <strong>🌱 Oportunidades</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>✦ Tendencias del mercado favorables</li>
+          <li>✦ Red de contactos aprovechable</li>
+        </ul>
+      </div>
+      <div class="foda-card foda-a">
+        <strong>🚨 Amenazas</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>✦ Alta competencia en el sector</li>
+          <li>✦ Factores externos: crisis, cambios normativos</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Pasos del PDI:</p>
+    <div class="pasos">
+      <div class="paso"><div class="paso-num">1</div><div class="paso-contenido"><strong>Autoevaluación y diagnóstico (FODA)</strong><span>Identifica fortalezas, debilidades, oportunidades y amenazas.</span></div></div>
+      <div class="paso"><div class="paso-num">2</div><div class="paso-contenido"><strong>Definición de metas SMART</strong><span>Corto plazo (6m–1año) · Medio plazo (1–3 años) · Largo plazo (3–5 años).</span></div></div>
+      <div class="paso"><div class="paso-num">3</div><div class="paso-contenido"><strong>Identificación de recursos y estrategias</strong><span>Formación, experiencia práctica, red de contactos, desarrollo de habilidades.</span></div></div>
+      <div class="paso"><div class="paso-num">4</div><div class="paso-contenido"><strong>Plan de acción detallado</strong><span>Tareas específicas + plazos asignados + monitoreo del progreso.</span></div></div>
+      <div class="paso"><div class="paso-num">5</div><div class="paso-contenido"><strong>Reflexión y ajuste</strong><span>Autoevaluación regular · lecciones aprendidas · actualizar metas si es necesario.</span></div></div>
+    </div>
+  </div>
+
+  <!-- 5.9 HERRAMIENTAS DE APRENDIZAJE AUTÓNOMO -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🛠️</span> 5.9 · Herramientas de Aprendizaje Autónomo</div>
+    <div class="plat-grid">
+      <div class="plat-card pl-1">
+        <strong>🎓 Plataformas de aprendizaje</strong>
+        <span class="app-tag">Coursera</span>
+        <span class="app-tag">Udemy</span>
+        <span class="app-tag">LinkedIn Learning</span>
+        <span class="app-tag">Khan Academy</span>
+        <span class="app-tag">Codecademy</span>
+        <span class="app-tag">edX</span>
+        <p style="margin-top:0.4rem;font-size:0.78rem;color:var(--color-texto-suave);">Cursos, tutoriales y certificaciones a tu ritmo y desde cualquier lugar.</p>
+      </div>
+      <div class="plat-card pl-2">
+        <strong>⏱️ Gestión del tiempo y productividad</strong>
+        <span class="app-tag">Trello</span>
+        <span class="app-tag">Asana</span>
+        <span class="app-tag">Google Calendar</span>
+        <span class="app-tag">Notion</span>
+        <p style="margin-top:0.4rem;font-size:0.78rem;color:var(--color-texto-suave);">Organiza metas, tareas, plazos y sesiones de estudio de forma visual.</p>
+      </div>
+      <div class="plat-card pl-3">
+        <strong>📝 Toma de notas y organización</strong>
+        <span class="app-tag">Evernote</span>
+        <span class="app-tag">OneNote</span>
+        <span class="app-tag">Notion</span>
+        <span class="app-tag">Google Keep</span>
+        <p style="margin-top:0.4rem;font-size:0.78rem;color:var(--color-texto-suave);">Captura ideas, organiza por temas y accede a tu información siempre.</p>
+      </div>
+      <div class="plat-card pl-4">
+        <strong>🌐 Comunidades y redes profesionales</strong>
+        <span class="app-tag">LinkedIn</span>
+        <span class="app-tag">Reddit</span>
+        <span class="app-tag">Quora</span>
+        <span class="app-tag">Medium</span>
+        <span class="app-tag">Google Scholar</span>
+        <span class="app-tag">Feedly</span>
+        <p style="margin-top:0.4rem;font-size:0.78rem;color:var(--color-texto-suave);">Aprende de otros, comparte conocimientos y mantente actualizado.</p>
+      </div>
+    </div>
+    <div class="recuerda" style="margin-top:0.9rem;">
+      <div class="recuerda-titulo">⭐ Clave del tema 5</div>
+      El aprendizaje autónomo no es solo estudiar solo — es <strong>tomar el control</strong> de tu desarrollo. Un buen PLE + identidad digital cuidada + PDI actualizado = empleabilidad sólida y duradera.
+    </div>
+  </div>
+
+</div>
+
+<footer class="pie">
+  IPEI · Tema 5 — Estrategias de Aprendizaje Autónomo &nbsp;|&nbsp; Resumen visual para estudio
+</footer>
+
+</body>
+</html>

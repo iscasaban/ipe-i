@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Tema 1 — Características del Sector Productivo</title>
+  <style>
+    /* =============================================
+       IPEI -
+       ============================================= */
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@700;900&display=swap');
+
+    :root {
+      --color-primario: #00b4d8;
+      --color-primario-oscuro: #0077b6;
+      --color-acento: #f4a261;
+      --color-acento2: #2ec4b6;
+      --color-fondo: #f0f8ff;
+      --color-blanco: #ffffff;
+      --color-texto: #1d3557;
+      --color-texto-suave: #4a6580;
+      --color-tag-bg: #e0f7fa;
+      --color-tag-texto: #006d8f;
+      --color-alerta: #fff3cd;
+      --color-alerta-borde: #ffc107;
+      --radio: 14px;
+      --radio-sm: 8px;
+      --sombra: 0 4px 18px rgba(0, 119, 182, 0.10);
+      --sombra-hover: 0 8px 28px rgba(0, 119, 182, 0.18);
+      --fuente-titulo: 'Raleway', sans-serif;
+      --fuente-cuerpo: 'Nunito', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--fuente-cuerpo);
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    .tema-header {
+      background: linear-gradient(135deg, var(--color-primario-oscuro) 0%, var(--color-primario) 100%);
+      color: var(--color-blanco);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tema-header h1 {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 900;
+      margin-bottom: 0.8rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contenedor {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem 3rem;
+    }
+
+    /* =============================================
+       Estilos Específicos del Test (Adaptados)
+       ============================================= */
+    .pb-wrap {
+      background: #d0e9f5;
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .pb {
+      background: var(--color-acento);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .hdr {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      color: var(--color-primario-oscuro);
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .qcard {
+      background: var(--color-blanco);
+      border-radius: var(--radio);
+      box-shadow: var(--sombra);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .qn {
+      color: var(--color-acento);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .qt {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .opts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .opt {
+      background: var(--color-fondo);
+      border: 2px solid transparent;
+      padding: 1rem;
+      border-radius: var(--radio-sm);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--color-texto);
+    }
+
+    .opt:hover:not(:disabled) {
+      border-color: var(--color-primario);
+      transform: translateX(5px);
+    }
+
+    .opt.correct {
+      background: #e7f9f3;
+      border-color: var(--color-acento2);
+      color: #0e7066;
+    }
+
+    .opt.wrong {
+      background: #fff0f0;
+      border-color: #e57373;
+      color: #c62828;
+    }
+
+    .olbl {
+      background: var(--color-primario);
+      color: white;
+      min-width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .fb {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: var(--radio-sm);
+      font-size: 0.95rem;
+      display: none;
+    }
+    .fb.show { display: block; }
+    .cfb { background: #e0faf5; border-left: 5px solid var(--color-acento2); }
+    .wfb { background: #fff3cd; border-left: 5px solid var(--color-alerta-borde); }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radio-sm);
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn.pri {
+      background: var(--color-primario-oscuro);
+      color: white;
+    }
+
+    .btn.pri:hover {
+      background: var(--color-primario);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Resultados */
+    .res { text-align: center; }
+    .sc-circle {
+      width: 120px;
+      height: 120px;
+      background: var(--color-primario);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .sc-big { font-size: 2rem; font-weight: 900; }
+    .res-t { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--color-primario-oscuro); }
+    .sg { display: flex; justify-content: center; gap: 2rem; margin: 2rem 0; }
+    .sc-n { font-size: 1.5rem; font-weight: 800; }
+    .sc-l { font-size: 0.8rem; text-transform: uppercase; color: var(--color-texto-suave); }
+
+    .rev { text-align: left; margin-top: 3rem; }
+    .rev-t { font-weight: 800; font-size: 1.2rem; margin-bottom: 1rem; border-bottom: 2px solid var(--color-primario); padding-bottom: 0.5rem; }
+    .ri { padding: 1rem; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+    .rc { border-left: 4px solid var(--color-acento2); }
+    .rw { border-left: 4px solid #e57373; }
+  </style>
+</head>
+<body>
+
+<header class="tema-header">
+  <div class="contenedor">
+    <div class="asignatura">IPEI — Itinerario Personal para la Empleabilidad</div>
+    <h1>Tema 1: Características del Sector Productivo</h1>
+    <p class="subtitulo">Comprueba tus conocimientos sobre subsectores, perfiles profesionales y el sistema nacional de cualificaciones.</p>
+  </div>
+</header>
+
+<div class="contenedor" id="root">
+  <!-- El contenido se genera por JS -->
+</div>
+
+<script>
+  const SUBTITLE = "Has completado el test de Características del Sector Productivo";
+  const qs = [
+    {
+      q: "¿En cuántos grandes subsectores se divide el sector productivo?",
+      opts: ["Dos: público y privado", "Tres: agrícola, industrial y de servicios", "Cuatro: primario, secundario, terciario y cuaternario", "Dos: bienes y servicios"],
+      correct: 1
+    },
+    {
+      q: "¿Qué evalúa el análisis del 'tamaño del mercado' dentro del sector productivo?",
+      opts: ["El número de trabajadores de una empresa", "Las barreras de entrada al mercado", "La dimensión del mercado en términos de producción y consumo", "El nivel de innovación tecnológica del sector"],
+      correct: 2
+    },
+    {
+      q: "¿Cuál de los siguientes es un componente del perfil profesional?",
+      opts: ["El número de empleados de la empresa", "Las competencias técnicas del candidato", "El tamaño del mercado en el que trabaja", "La oferta educativa disponible en el país"],
+      correct: 1
+    },
+    {
+      q: "Las habilidades blandas incluyen:",
+      opts: ["Manejo de maquinaria industrial", "Conocimientos en biotecnología", "Comunicación, trabajo en equipo y liderazgo", "Programación y análisis de datos"],
+      correct: 2
+    },
+    {
+      q: "¿Qué es un yacimiento de ocupación?",
+      opts: ["Una bolsa de empleo para titulados universitarios", "La posibilidad de crear empleo para satisfacer nuevas necesidades sociales", "Un registro oficial de puestos vacantes en la Administración pública", "Un recurso natural que genera puestos de trabajo"],
+      correct: 1
+    },
+    {
+      q: "¿Cuáles son los tres factores a los que se puede asociar la existencia de nuevos yacimientos de ocupación?",
+      opts: ["Educación, sanidad y tecnología", "Estilos de vida, servicios y regímenes fiscales", "Demografía, economía y legislación", "Globalización, digitalización y sostenibilidad"],
+      correct: 1
+    },
+    {
+      q: "¿Cuáles son los principales yacimientos de ocupación en España?",
+      opts: ["Minería, agricultura y pesca", "Envejecimiento de la población, ecología y nuevas tecnologías aplicadas al marketing digital", "Construcción, turismo y hostelería", "Administración pública, sanidad y educación"],
+      correct: 1
+    },
+    {
+      q: "¿Qué es la Oferta Pública de Empleo (OPE)?",
+      opts: ["Un portal web de ofertas de trabajo del sector privado", "El proceso anual en que las Administraciones anuncian plazas disponibles mediante oposiciones", "Un servicio de intermediación laboral para desempleados", "Un contrato de trabajo temporal con la Administración"],
+      correct: 1
+    },
+    {
+      q: "¿Cuántos años como mínimo debe tener una persona para acceder a la función pública?",
+      opts: ["18 años", "21 años", "16 años", "14 años"],
+      correct: 2
+    },
+    {
+      q: "Un funcionario interino es aquel que:",
+      opts: ["Trabaja de forma permanente con nombramiento oficial", "Trabaja temporalmente por necesidad y urgencia cuando no hay un funcionario de carrera disponible", "Es personal directivo de la Administración pública", "Trabaja a tiempo parcial para la Administración"],
+      correct: 1
+    },
+    {
+      q: "¿Cuál es el orden lógico de un proceso de búsqueda de empleo en la oferta privada?",
+      opts: ["Entrevista → análisis de la oferta → contratación", "Contratación → pruebas de selección → análisis de la oferta", "Análisis de la oferta → proceso selectivo → conclusión del proceso", "Envío del CV → análisis de la oferta → entrevista"],
+      correct: 2
+    },
+    {
+      q: "¿Qué describe el itinerario formativo o perfil académico?",
+      opts: ["Las notas obtenidas durante los estudios", "La trayectoria de aprendizaje ordenada de menor a mayor dificultad", "El conjunto de trabajos realizados a lo largo de la vida laboral", "El número de titulaciones que posee un trabajador"],
+      correct: 1
+    },
+    {
+      q: "¿Cuándo termina el itinerario formativo de una persona?",
+      opts: ["Al finalizar el ciclo formativo", "Al obtener el primer empleo", "Al jubilarse", "No tiene fin definido"],
+      correct: 3
+    },
+    {
+      q: "Las aptitudes en el ámbito laboral son:",
+      opts: ["Las normas de comportamiento que se siguen en el trabajo", "Las características que condicionan la conducta y permiten llevar a cabo tareas", "Las titulaciones académicas obtenidas", "Las preferencias personales sobre el tipo de trabajo"],
+      correct: 1
+    },
+    {
+      q: "¿Cuál de las siguientes es una capacidad transversal muy valorada por las empresas?",
+      opts: ["Manejo de maquinaria específica del sector", "Conocimiento de idiomas extranjeros", "Trabajo en equipo", "Titulación universitaria superior"],
+      correct: 2
+    },
+    {
+      q: "Las capacidades específicas son aquellas que:",
+      opts: ["Son comunes a cualquier persona y puesto de trabajo", "Están relacionadas con las tareas individuales de un puesto concreto", "Se aprenden únicamente en la universidad", "Solo se adquieren con la experiencia laboral"],
+      correct: 1
+    },
+    {
+      q: "¿Qué es la cualificación profesional?",
+      opts: ["El número de años de experiencia laboral", "El nivel de estudios alcanzado", "Las competencias profesionales necesarias para llevar a cabo las actividades de una profesión", "El salario mínimo establecido para un puesto de trabajo"],
+      correct: 2
+    },
+    {
+      q: "¿Qué es la unidad de competencia?",
+      opts: ["El conjunto de todas las competencias de una persona", "La agrupación mínima de competencias susceptible de acreditación", "El módulo formativo asociado a una titulación", "El nivel máximo de cualificación en el CNCP"],
+      correct: 1
+    },
+    {
+      q: "¿Cuántas familias profesionales recoge el Catálogo Nacional de Cualificaciones Profesionales (CNCP)?",
+      opts: ["16 familias", "20 familias", "26 familias", "32 familias"],
+      correct: 2
+    },
+    {
+      q: "¿En cuántos niveles de cualificación se estructura el CNCP?",
+      opts: ["Dos: básico y avanzado", "Tres: básico, medio y superior", "Cuatro: inicial, básico, medio y superior", "Cinco niveles europeos de cualificación"],
+      correct: 1
+    },
+    {
+      q: "¿Qué organismo se encarga de mantener actualizado el CNCP?",
+      opts: ["El Ministerio de Educación", "El SEPE (Servicio Público de Empleo Estatal)", "El Instituto Nacional de las Cualificaciones", "La Inspección de Trabajo"],
+      correct: 2
+    },
+    {
+      q: "¿Cuál es la función principal del Sistema Nacional de Cualificaciones y Formación Profesional?",
+      opts: ["Gestionar las prestaciones por desempleo", "Promover la integración de las ofertas de FP y la acreditación de competencias", "Regular los convenios colectivos de los trabajadores", "Supervisar las oposiciones a la función pública"],
+      correct: 1
+    },
+    {
+      q: "¿A qué se llama 'análisis del perfil profesional'?",
+      opts: ["Estudiar las tendencias de empleo en el mercado global", "Evaluar la correspondencia entre las competencias requeridas por empleadores y las ofrecidas por candidatos", "Revisar el currículum vítae de un candidato", "Analizar las condiciones económicas de un sector"],
+      correct: 1
+    },
+    {
+      q: "Una empresa que quiere adaptar su CV y carta de presentación a una oferta concreta, ¿qué debe hacer primero?",
+      opts: ["Llamar directamente a la empresa para pedir la entrevista", "Enviar el CV sin personalizar para ahorrar tiempo", "Analizar correctamente la oferta: puesto, requisitos y condiciones", "Publicar el CV en todas las bolsas de empleo disponibles"],
+      correct: 2
+    }
+  ];
+
+  let cur = 0, answered = Array(qs.length).fill(null), selected = Array(qs.length).fill(null), showRes = false;
+
+  function render() {
+    const root = document.getElementById('root');
+    if (showRes) { renderRes(root); return; }
+    const q = qs[cur];
+    const isAns = answered[cur] !== null;
+    const prog = ((cur + 1) / qs.length) * 100;
+    const score = answered.filter((a, i) => a === qs[i].correct).length;
+    const ansCount = answered.filter(a => a !== null).length;
+
+    root.innerHTML = `
+    <div class="pb-wrap"><div class="pb" style="width:${prog}%"></div></div>
+    <div class="hdr">
+      <span>Pregunta ${cur + 1} de ${qs.length}</span>
+      <span>${ansCount > 0 ? score + '/' + ansCount + ' correctas' : 'Selecciona una respuesta'}</span>
+    </div>
+    <div class="qcard">
+      <div class="qn">Cuestión ${cur + 1}</div>
+      <div class="qt">${q.q}</div>
+      <div class="opts">
+        ${q.opts.map((o, i) => {
+      let cls = 'opt';
+      if (isAns) {
+        if (i === q.correct) cls += ' correct';
+        else if (i === selected[cur] && selected[cur] !== q.correct) cls += ' wrong';
+      }
+      return `<button class="${cls}" ${isAns ? 'disabled' : ''} onclick="ans(${i})">
+            <span class="olbl">${String.fromCharCode(65+i)}</span><span>${o}</span>
+          </button>`;
+    }).join('')}
+      </div>
+      ${isAns ? `<div class="fb show ${selected[cur] === q.correct ? 'cfb' : 'wfb'}">
+        ${selected[cur] === q.correct ? '<strong>✓ ¡Correcto!</strong>' : '<strong>✗ Respuesta incorrecta.</strong>'}
+        La opción correcta es la <strong>${String.fromCharCode(65+q.correct)}</strong>.
+      </div>` : ''}
+    </div>
+    <div class="nav">
+      <button class="btn" onclick="go(-1)" ${cur === 0 ? 'disabled' : ''}>← Anterior</button>
+      ${cur === qs.length - 1
+            ? `<button class="btn pri" onclick="finish()" ${!isAns ? 'disabled' : ''}>Ver resultados →</button>`
+            : `<button class="btn pri" onclick="go(1)" ${!isAns ? 'disabled' : ''}>Siguiente →</button>`}
+    </div>`;
+  }
+
+  function ans(idx) {
+    if (answered[cur] !== null) return;
+    selected[cur] = idx; answered[cur] = idx; render();
+  }
+  function go(d) { cur = Math.max(0, Math.min(qs.length-1, cur+d)); render(); }
+  function finish() { showRes = true; render(); }
+
+  function renderRes(root) {
+    const score = answered.filter((a,i) => a === qs[i].correct).length;
+    const total = qs.length;
+    const unans = answered.filter(a => a === null).length;
+    const wrong = total - score - unans;
+    const pct = Math.round((score/total)*100);
+    const msg = pct >= 90 ? '¡Excelente, dominas el sector!' : pct >= 70 ? 'Buen trabajo, conoces bien el entorno' : pct >= 50 ? 'Aprobado, pero conviene repasar' : 'Necesitas reforzar este tema';
+
+    root.innerHTML = `
+    <div class="res qcard">
+      <div class="sc-circle"><span class="sc-big">${pct}%</span><span class="sc-den">${score}/${total}</span></div>
+      <div class="res-t">${msg}</div>
+      <div class="res-s">${SUBTITLE}</div>
+      <div class="sg">
+        <div class="sc"><div class="sc-n" style="color:#2ec4b6">${score}</div><div class="sc-l">Correctas</div></div>
+        <div class="sc"><div class="sc-n" style="color:#e57373">${wrong}</div><div class="sc-l">Erróneas</div></div>
+      </div>
+      <button class="btn pri" onclick="restart()">Reiniciar test</button>
+
+      <div class="rev">
+        <div class="rev-t">Revisión de respuestas</div>
+        ${qs.map((q,i) => {
+      const isC = answered[i] === q.correct;
+      return `<div class="ri ${isC ? 'rc' : 'rw'}">
+            <strong>P${i+1}:</strong> ${q.q}<br>
+            <span style="color: ${isC ? '#1D9E75' : '#E24B4A'}">
+              ${isC ? '✓' : '✗'} Tu respuesta: ${answered[i] !== null ? q.opts[answered[i]] : 'Sin responder'}
+            </span>
+            ${!isC ? `<br><small>Correcta: ${q.opts[q.correct]}</small>` : ''}
+          </div>`;
+    }).join('')}
+      </div>
+    </div>`;
+  }
+
+  function restart() {
+    cur = 0; answered = Array(qs.length).fill(null); selected = Array(qs.length).fill(null); showRes = false; render();
+  }
+
+  render();
+</script>
+
+</body>
+</html>

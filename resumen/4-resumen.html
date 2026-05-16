@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tema 4 · Autoorientación y Hoja de Ruta para la Inserción Profesional</title>
+  <link rel="stylesheet" href="../estilos.css" />
+  <style>
+    /* ===== COLORES PROPIOS DEL TEMA 4 ===== */
+    :root {
+      --t4-verde:   #2ec4b6;
+      --t4-naranja: #f4a261;
+      --t4-rojo:    #e63946;
+      --t4-morado:  #7b2d8b;
+      --t4-azul:    #00b4d8;
+      --t4-lima:    #52b788;
+    }
+
+    /* ===== GRID DE PERFILES ===== */
+    .perfiles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 0.7rem;
+    }
+    .perfil-card {
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      font-size: 0.83rem;
+    }
+    .perfil-disp { background: #e0f7fa; border-top: 4px solid var(--t4-azul); }
+    .perfil-exig { background: #e8f5e9; border-top: 4px solid var(--t4-verde); }
+    .perfil-card strong {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+      color: var(--color-primario-oscuro);
+    }
+    .perfil-card li { margin-bottom: 0.25rem; color: var(--color-texto-suave); }
+
+    /* ===== TABLA COMPARATIVA ===== */
+    .tabla-comparativa {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+    }
+    .tabla-comparativa th {
+      background: var(--color-primario);
+      color: white;
+      padding: 0.55rem 0.8rem;
+      text-align: left;
+      font-weight: 700;
+    }
+    .tabla-comparativa td {
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid #d0eaf5;
+      color: var(--color-texto-suave);
+    }
+    .tabla-comparativa tr:nth-child(even) td { background: #f5fbff; }
+    .brecha-badge {
+      display: inline-block;
+      background: #fff3cd;
+      color: #856404;
+      border-radius: 12px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* ===== SMART ===== */
+    .smart-grid {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+      flex-wrap: wrap;
+    }
+    .smart-item {
+      flex: 1 1 100px;
+      border-radius: 10px;
+      padding: 0.8rem 0.6rem;
+      text-align: center;
+    }
+    .s-s { background: #e0f7fa; border-bottom: 4px solid var(--t4-azul); }
+    .s-m { background: #e8f5e9; border-bottom: 4px solid var(--t4-verde); }
+    .s-a { background: #fff0e0; border-bottom: 4px solid var(--t4-naranja); }
+    .s-r { background: #f3e5f5; border-bottom: 4px solid var(--t4-morado); }
+    .s-t { background: #fce4ec; border-bottom: 4px solid var(--t4-rojo); }
+    .smart-letra {
+      font-family: var(--fuente-titulo);
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--color-primario-oscuro);
+    }
+    .smart-item strong { display: block; font-size: 0.82rem; margin: 0.2rem 0 0.1rem; }
+    .smart-item span { font-size: 0.75rem; color: var(--color-texto-suave); }
+
+    /* ===== COMPETENCIAS PERSONALES Y SOCIALES ===== */
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      margin-top: 0.7rem;
+    }
+    .comp-card {
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+    }
+    .comp-pers { background: #e0f7fa; border-left: 5px solid var(--t4-azul); }
+    .comp-soc  { background: #e8f5e9; border-left: 5px solid var(--t4-verde); }
+    .comp-card strong { display: block; font-size: 0.88rem; color: var(--color-primario-oscuro); margin-bottom: 0.35rem; }
+    .comp-card li { margin-bottom: 0.3rem; color: var(--color-texto-suave); }
+
+    /* ===== COMO EVALUAR ===== */
+    .eval-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .eval-card {
+      border-radius: 10px;
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    .ev-1 { background: linear-gradient(135deg,#e0f7fa,#e8f5ff); border-top: 4px solid var(--t4-azul); }
+    .ev-2 { background: linear-gradient(135deg,#e8f5e9,#f0fff4); border-top: 4px solid var(--t4-verde); }
+    .ev-3 { background: linear-gradient(135deg,#fff0e0,#fff8f0); border-top: 4px solid var(--t4-naranja); }
+    .eval-card .ev-icon { font-size: 1.6rem; }
+    .eval-card strong { display: block; font-size: 0.85rem; margin: 0.25rem 0; }
+
+    /* ===== AUTOESTIMA ===== */
+    .autoestima-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .ae-card {
+      border-radius: 10px;
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    .ae-1 { background: #e0f7fa; border-bottom: 4px solid var(--t4-azul); }
+    .ae-2 { background: #fff3cd; border-bottom: 4px solid var(--t4-naranja); }
+    .ae-3 { background: #e8f5e9; border-bottom: 4px solid var(--t4-verde); }
+    .ae-card .ae-icon { font-size: 1.5rem; }
+    .ae-card strong { display: block; font-size: 0.83rem; margin: 0.2rem 0; }
+
+    /* ===== BALANCE PROFESIONAL ===== */
+    .balance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .bal-card {
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      font-size: 0.82rem;
+      border-left: 4px solid var(--color-primario);
+      background: var(--color-fondo);
+    }
+    .bal-card strong { display: block; font-size: 0.85rem; color: var(--color-primario-oscuro); margin-bottom: 0.2rem; }
+
+    /* ===== STAR METHOD ===== */
+    .star-grid {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+      flex-wrap: wrap;
+    }
+    .star-item {
+      flex: 1 1 120px;
+      border-radius: 10px;
+      padding: 0.8rem 0.7rem;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    .st-s { background: #e0f7fa; border-top: 4px solid var(--t4-azul); }
+    .st-t { background: #e8f5e9; border-top: 4px solid var(--t4-verde); }
+    .st-a { background: #fff0e0; border-top: 4px solid var(--t4-naranja); }
+    .st-r { background: #fce4ec; border-top: 4px solid var(--t4-rojo); }
+    .star-letra {
+      font-family: var(--fuente-titulo);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--color-primario-oscuro);
+      line-height: 1;
+    }
+    .star-item strong { display: block; font-size: 0.83rem; margin: 0.2rem 0 0.1rem; }
+    .star-item span { font-size: 0.75rem; color: var(--color-texto-suave); }
+
+    /* ===== ENTREVISTA SÍ/NO ===== */
+    .entrevista-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      margin-top: 0.7rem;
+    }
+    .entrev-card {
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      font-size: 0.82rem;
+    }
+    .entrev-si  { background: #e8f5e9; border-left: 5px solid #43a047; }
+    .entrev-no  { background: #fce4ec; border-left: 5px solid #e91e63; }
+    .entrev-card strong { display: block; font-size: 0.88rem; margin-bottom: 0.35rem; }
+    .entrev-card li { margin-bottom: 0.3rem; color: var(--color-texto-suave); }
+
+    /* ===== PLAN DE ACCIÓN (pasos) ===== */
+    .plan-pasos {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.7rem;
+    }
+
+    /* ===== ITINERARIOS FORMATIVOS ===== */
+    .iter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .iter-card {
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      font-size: 0.82rem;
+    }
+    .it-1 { background: #e0f7fa; border-top: 4px solid var(--t4-azul); }
+    .it-2 { background: #e8f5e9; border-top: 4px solid var(--t4-verde); }
+    .it-3 { background: #fff0e0; border-top: 4px solid var(--t4-naranja); }
+    .it-4 { background: #f3e5f5; border-top: 4px solid var(--t4-morado); }
+    .iter-card strong { display: block; font-size: 0.87rem; color: var(--color-primario-oscuro); margin-bottom: 0.25rem; }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:600px){
+      .perfiles-grid, .comp-grid, .entrevista-grid, .balance-grid, .iter-grid { grid-template-columns: 1fr; }
+      .eval-grid, .autoestima-grid { grid-template-columns: 1fr; }
+      .smart-grid .smart-item, .star-grid .star-item { flex: 1 1 40%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CABECERA -->
+<header class="tema-header">
+  <div class="numero-tema">4</div>
+  <p class="asignatura">Itinerario Personal para la Empleabilidad</p>
+  <h1>Autoorientación y Hoja de Ruta para la Inserción Profesional</h1>
+  <p class="subtitulo">Perfil · Competencias · Autoestima · Balance profesional · Objetivos SMART · Entrevista</p>
+</header>
+
+<div class="contenedor">
+
+  <!-- 4.1 INSTRUMENTOS PARA IDENTIFICAR TU PERFIL -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🔍</span> 4.1 · Instrumentos para Identificar tu Perfil</div>
+    <div class="destacado">
+      El punto de partida: compara <strong>lo que ya tienes</strong> (perfil disponible) con <strong>lo que necesitas</strong> (perfil exigible del título). Esa diferencia = tu plan de acción.
+    </div>
+    <div class="perfiles-grid">
+      <div class="perfil-card perfil-disp">
+        <strong>🙋 Perfil Disponible (lo que tienes)</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>✦ Habilidades técnicas y generales actuales</li>
+          <li>✦ Experiencia laboral y proyectos realizados</li>
+          <li>✦ Formación académica y certificaciones</li>
+          <li>✦ Intereses y valores personales</li>
+        </ul>
+      </div>
+      <div class="perfil-card perfil-exig">
+        <strong>🎯 Perfil Exigible (lo que piden)</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>✦ Habilidades técnicas requeridas por el título</li>
+          <li>✦ Habilidades generales valoradas (comm., liderazgo…)</li>
+          <li>✦ Requisitos académicos y certificaciones</li>
+          <li>✦ Expectativas del mercado laboral</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Pasos para comparar perfiles:</p>
+    <div class="pasos">
+      <div class="paso"><div class="paso-num">1</div><div class="paso-contenido"><strong>Identifica competencias clave</strong><span>Revisa el plan de estudios y haz un autoanálisis.</span></div></div>
+      <div class="paso"><div class="paso-num">2</div><div class="paso-contenido"><strong>Evalúa habilidades y conocimientos</strong><span>Usa autoevaluaciones, feedback de colegas y revisiones de desempeño.</span></div></div>
+      <div class="paso"><div class="paso-num">3</div><div class="paso-contenido"><strong>Detecta brechas</strong><span>¿Qué te falta para llegar al perfil exigible?</span></div></div>
+      <div class="paso"><div class="paso-num">4</div><div class="paso-contenido"><strong>Crea un plan de acción</strong><span>Cursos, certificaciones, prácticas, mentores.</span></div></div>
+      <div class="paso"><div class="paso-num">5</div><div class="paso-contenido"><strong>Monitorea tu progreso</strong><span>Revisiones periódicas + feedback + autoevaluación.</span></div></div>
+    </div>
+
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Ejemplo de tabla comparativa:</p>
+    <table class="tabla-comparativa">
+      <thead><tr><th>Aspecto</th><th>Perfil disponible</th><th>Perfil exigible</th><th>Brecha</th></tr></thead>
+      <tbody>
+      <tr><td>Habilidades técnicas</td><td>Conocimientos en X, Y, Z</td><td>Dominio en A, B, Z</td><td><span class="brecha-badge">Falta A, B</span></td></tr>
+      <tr><td>Experiencia laboral</td><td>2 años en sector X</td><td>3–5 años en sector X</td><td><span class="brecha-badge">1–3 años más</span></td></tr>
+      <tr><td>Formación</td><td>Grado en X</td><td>Grado + certificación Y</td><td><span class="brecha-badge">Certificación Y</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4.3 COMPETENCIAS PERSONALES Y SOCIALES -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🧠</span> 4.3 · Competencias para la Empleabilidad</div>
+    <div class="comp-grid">
+      <div class="comp-card comp-pers">
+        <strong>👤 Personales</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>💪 <b>Autoconfianza</b> — tomar decisiones con seguridad</li>
+          <li>⏱️ <b>Gestión del tiempo</b> — cumplir plazos, ser productivo</li>
+          <li>🌱 <b>Resiliencia</b> — recuperarse de las dificultades</li>
+        </ul>
+        <div style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-texto-suave);">
+          <b>Cómo desarrollarlas:</b> metas alcanzables · herramientas de planificación · autorreflexión positiva
+        </div>
+      </div>
+      <div class="comp-card comp-soc">
+        <strong>🤝 Sociales</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>🗣️ <b>Comunicación efectiva</b> — escucha activa + empatía</li>
+          <li>👥 <b>Trabajo en equipo</b> — colaborar hacia objetivos comunes</li>
+          <li>🎯 <b>Liderazgo</b> — guiar y motivar al grupo</li>
+        </ul>
+        <div style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-texto-suave);">
+          <b>Cómo desarrollarlas:</b> proyectos grupales · voluntariado · mentoría y coaching
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Cómo evaluarlas:</p>
+    <div class="eval-grid">
+      <div class="eval-card ev-1">
+        <div class="ev-icon">🔎</div>
+        <strong>Autoevaluación</strong>
+        <span>Reflexiona sobre habilidades y experiencias pasadas. Pide feedback.</span>
+      </div>
+      <div class="eval-card ev-2">
+        <div class="ev-icon">📚</div>
+        <strong>Formación</strong>
+        <span>Cursos, talleres y programas específicos de competencias.</span>
+      </div>
+      <div class="eval-card ev-3">
+        <div class="ev-icon">🏗️</div>
+        <strong>Práctica</strong>
+        <span>Proyectos, voluntariado y actividades donde aplicar y crecer.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4.4 CONSTRUCCIÓN DEL PROYECTO PROFESIONAL -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🏗️</span> 4.4 · Construcción del Proyecto Profesional</div>
+    <div class="tarjetas">
+      <div class="tarjeta" style="border-left-color:var(--t4-azul);">
+        <div class="tarjeta-titulo" style="color:var(--t4-azul);">🪞 Autoconocimiento</div>
+        <p>Identifica <b>fortalezas y debilidades</b>, intereses y pasiones, y valores que guían tus decisiones.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--t4-verde);">
+        <div class="tarjeta-titulo" style="color:var(--t4-verde);">🔭 Mercado laboral</div>
+        <p>Analiza tendencias del sector, oportunidades existentes y qué experiencia buscan los empleadores.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--t4-naranja);">
+        <div class="tarjeta-titulo" style="color:#b85c00;">🌐 Red de contactos</div>
+        <p>Asiste a eventos, usa <b>LinkedIn</b>, busca mentores y únete a grupos profesionales.</p>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Objetivos SMART:</p>
+    <div class="smart-grid">
+      <div class="smart-item s-s"><div class="smart-letra">S</div><strong>Specific</strong><span>Específicos</span></div>
+      <div class="smart-item s-m"><div class="smart-letra">M</div><strong>Measurable</strong><span>Medibles</span></div>
+      <div class="smart-item s-a"><div class="smart-letra">A</div><strong>Achievable</strong><span>Alcanzables</span></div>
+      <div class="smart-item s-r"><div class="smart-letra">R</div><strong>Relevant</strong><span>Relevantes</span></div>
+      <div class="smart-item s-t"><div class="smart-letra">T</div><strong>Time-bound</strong><span>Con plazo</span></div>
+    </div>
+    <div class="recuerda" style="margin-top:0.9rem;">
+      <div class="recuerda-titulo">💡 Ejemplo SMART</div>
+      "Obtener una certificación en gestión de proyectos <b>en los próximos 6 meses</b> para mejorar habilidades de liderazgo y aumentar mis oportunidades de promoción."
+    </div>
+  </div>
+
+  <!-- 4.5 AUTOESTIMA -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">💪</span> 4.5 · Autoestima en la Búsqueda de Empleo</div>
+    <div class="destacado">
+      <strong>Autoestima</strong> = autoimagen + autoeficacia + autovaloración. Mantenerla alta marca la diferencia entre el éxito y el fracaso en la búsqueda de empleo.
+    </div>
+    <div class="autoestima-grid">
+      <div class="ae-card ae-1">
+        <div class="ae-icon">🎤</div>
+        <strong>Confianza</strong>
+        <span>Presentas habilidades con seguridad en entrevistas</span>
+      </div>
+      <div class="ae-card ae-2">
+        <div class="ae-icon">🔄</div>
+        <strong>Resiliencia</strong>
+        <span>Manejas mejor los rechazos y sigues adelante</span>
+      </div>
+      <div class="ae-card ae-3">
+        <div class="ae-icon">🚀</div>
+        <strong>Motivación</strong>
+        <span>Mantienes el impulso para seguir aplicando</span>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Cómo fortalecer la autoestima:</p>
+    <div class="pasos">
+      <div class="paso"><div class="paso-num">1</div><div class="paso-contenido"><strong>Diario de logros</strong><span>Escribe diariamente tus éxitos y habilidades adquiridas.</span></div></div>
+      <div class="paso"><div class="paso-num">2</div><div class="paso-contenido"><strong>Afirmaciones positivas</strong><span>"Soy capaz y competente." "Estoy preparado para el éxito."</span></div></div>
+      <div class="paso"><div class="paso-num">3</div><div class="paso-contenido"><strong>Red de apoyo</strong><span>Comparte experiencias con amigos o mentores; busca feedback constructivo.</span></div></div>
+      <div class="paso"><div class="paso-num">4</div><div class="paso-contenido"><strong>Cuidado personal</strong><span>Ejercicio, descanso y equilibrio entre búsqueda de empleo y vida personal.</span></div></div>
+    </div>
+  </div>
+
+  <!-- 4.6 BALANCE PROFESIONAL -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">⚖️</span> 4.6 · El Balance Profesional</div>
+    <div class="destacado">
+      <strong>Balance profesional</strong> = análisis integral de tus competencias, experiencias y aspiraciones. Te ayuda a alinear tu perfil con las demandas del mercado.
+    </div>
+    <div class="balance-grid">
+      <div class="bal-card" style="border-color:var(--t4-azul);">
+        <strong>🔧 Competencias técnicas</strong>
+        Habilidades específicas adquiridas en formación y trabajo.
+      </div>
+      <div class="bal-card" style="border-color:var(--t4-verde);">
+        <strong>🤝 Habilidades blandas</strong>
+        Comunicación, trabajo en equipo, resolución de problemas.
+      </div>
+      <div class="bal-card" style="border-color:var(--t4-naranja);">
+        <strong>💼 Experiencia laboral</strong>
+        Empleos, prácticas y proyectos relevantes.
+      </div>
+      <div class="bal-card" style="border-color:var(--t4-morado);">
+        <strong>🎯 Aspiraciones</strong>
+        Objetivos a corto y largo plazo en tu carrera.
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Beneficios del balance profesional:</p>
+    <ul class="lista-check">
+      <li><b>Autoconocimiento:</b> identificas fortalezas, debilidades y oportunidades de mejora.</li>
+      <li><b>Planificación de carrera:</b> defines objetivos claros y realistas.</li>
+      <li><b>Alineación con el mercado:</b> sabes qué piden los empleadores y si encajas.</li>
+      <li><b>Confianza en entrevistas:</b> te presentas con claridad sobre tu valor profesional.</li>
+      <li><b>Adaptabilidad:</b> ajustas tu perfil a las tendencias del mercado laboral.</li>
+    </ul>
+  </div>
+
+  <!-- 4.8 LOGROS PERSONALES + MÉTODO STAR -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🏆</span> 4.8 · Reconocimiento y Puesta en Valor de los Logros</div>
+    <div class="tarjetas">
+      <div class="tarjeta" style="border-left-color:var(--t4-verde);">
+        <div class="tarjeta-titulo" style="color:var(--t4-verde);">📋 Identifica tus logros</div>
+        <p>Haz una lista (incluyendo voluntariado, proyectos personales, premios). Pide feedback a otros: ven lo que tú no ves.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--t4-azul);">
+        <div class="tarjeta-titulo" style="color:var(--t4-azul);">📊 Cuantifica y comunica</div>
+        <p>Usa <b>datos concretos</b>: en lugar de "mejoré las ventas", di <em>"aumenté ventas en un 20% en 6 meses"</em>.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--t4-naranja);">
+        <div class="tarjeta-titulo" style="color:#b85c00;">🌐 Marca personal</div>
+        <p>Actualiza tu <b>LinkedIn</b>, crea un portafolio online y comparte logros en redes profesionales.</p>
+      </div>
+    </div>
+
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Método STAR — Para estructurar logros en entrevistas:</p>
+    <div class="star-grid">
+      <div class="star-item st-s"><div class="star-letra">S</div><strong>Situación</strong><span>Contexto en el que ocurrió</span></div>
+      <div class="star-item st-t"><div class="star-letra">T</div><strong>Tarea</strong><span>El reto u objetivo que tenías</span></div>
+      <div class="star-item st-a"><div class="star-letra">A</div><strong>Acción</strong><span>Qué hiciste exactamente</span></div>
+      <div class="star-item st-r"><div class="star-letra">R</div><strong>Resultado</strong><span>Logro conseguido (con datos)</span></div>
+    </div>
+    <div class="recuerda" style="margin-top:0.8rem;">
+      <div class="recuerda-titulo">💡 Ejemplo STAR</div>
+      <b>S:</b> La empresa tenía baja presencia en redes. <b>T:</b> Aumentar visibilidad y engagement. <b>A:</b> Diseñé y ejecuté una campaña digital. <b>R:</b> +50% seguidores y +30% engagement en 3 meses.
+    </div>
+  </div>
+
+  <!-- 4.9 ITINERARIOS FORMATIVOS -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🗺️</span> 4.9 · Itinerarios Formativos del Perfil Profesional</div>
+    <div class="destacado">
+      <strong>Itinerarios formativos</strong> = rutas educativas y de capacitación para adquirir las habilidades necesarias. Son tu hoja de ruta del aprendizaje.
+    </div>
+    <div class="iter-grid">
+      <div class="iter-card it-1">
+        <strong>🎓 Educación formal</strong>
+        Grados, ciclos formativos, másteres y posgrados.
+      </div>
+      <div class="iter-card it-2">
+        <strong>📜 Cursos y certificaciones</strong>
+        Formación específica online u online. Más rápida y flexible.
+      </div>
+      <div class="iter-card it-3">
+        <strong>🏛️ Talleres y seminarios</strong>
+        Actualizaciones puntuales, networking y práctica concreta.
+      </div>
+      <div class="iter-card it-4">
+        <strong>🔨 Experiencia práctica</strong>
+        Prácticas, pasantías, voluntariado y proyectos personales.
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Cómo crear tu itinerario formativo:</p>
+    <div class="pasos">
+      <div class="paso"><div class="paso-num">1</div><div class="paso-contenido"><strong>Identifica tus objetivos</strong><span>¿Qué quieres lograr a corto, mediano y largo plazo?</span></div></div>
+      <div class="paso"><div class="paso-num">2</div><div class="paso-contenido"><strong>Investiga las opciones</strong><span>Duración, coste y relevancia de cada formación.</span></div></div>
+      <div class="paso"><div class="paso-num">3</div><div class="paso-contenido"><strong>Elabora un plan</strong><span>Cursos + certificaciones + experiencias prácticas con cronograma.</span></div></div>
+      <div class="paso"><div class="paso-num">4</div><div class="paso-contenido"><strong>Monitorea tu progreso</strong><span>Revisa regularmente y ajusta si aparecen nuevas oportunidades.</span></div></div>
+    </div>
+  </div>
+
+  <!-- 4.10 OBJETIVOS + 4.11 PLAN DE ACCIÓN -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">📋</span> 4.10–4.11 · Objetivos y Plan de Acción</div>
+    <div class="tarjetas">
+      <div class="tarjeta" style="border-left-color:var(--t4-azul);">
+        <div class="tarjeta-titulo" style="color:var(--t4-azul);">🎯 Objetivos profesionales</div>
+        <p>Define metas SMART. Reflexiona sobre qué te apasiona, en qué tienes talento y qué oportunidades existen en el mercado.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--t4-verde);">
+        <div class="tarjeta-titulo" style="color:var(--t4-verde);">🌿 Metas personales</div>
+        <p>Salud, relaciones, desarrollo personal, hobbies. También SMART. Equilíbralas con las profesionales.</p>
+      </div>
+      <div class="tarjeta" style="border-left-color:var(--t4-naranja);">
+        <div class="tarjeta-titulo" style="color:#b85c00;">🔗 Integración</div>
+        <p><b>Prioriza</b> lo más importante · <b>Planifica</b> usando calendarios y apps · <b>Evalúa y ajusta</b> regularmente.</p>
+      </div>
+    </div>
+    <p style="font-size:0.88rem;font-weight:700;color:var(--color-primario-oscuro);margin:0.9rem 0 0.3rem;">Plan de acción efectivo (4.11):</p>
+    <div class="pasos">
+      <div class="paso"><div class="paso-num">1</div><div class="paso-contenido"><strong>Autoconocimiento</strong><span>Identifica fortalezas y áreas de mejora (tests de personalidad, evaluaciones).</span></div></div>
+      <div class="paso"><div class="paso-num">2</div><div class="paso-contenido"><strong>Objetivos claros (SMART)</strong><span>Ej.: "Completar un curso de gestión del tiempo en 3 meses."</span></div></div>
+      <div class="paso"><div class="paso-num">3</div><div class="paso-contenido"><strong>Acciones concretas</strong><span>Define tareas específicas y plazos para cada una.</span></div></div>
+      <div class="paso"><div class="paso-num">4</div><div class="paso-contenido"><strong>Monitoreo mensual</strong><span>Revisa si cumples plazos. Sé flexible para ajustar.</span></div></div>
+      <div class="paso"><div class="paso-num">5</div><div class="paso-contenido"><strong>Celebra logros</strong><span>Reconoce tus avances y aprende de los fracasos para mejorar.</span></div></div>
+    </div>
+  </div>
+
+  <!-- 4.11.1 ENTREVISTA DE TRABAJO -->
+  <div class="seccion">
+    <div class="seccion-titulo"><span class="icono">🎤</span> 4.11.1 · La Entrevista de Trabajo</div>
+    <div class="entrevista-grid">
+      <div class="entrev-card entrev-si">
+        <strong>✅ SÍ hacer</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>🔍 Investiga la empresa antes (misión, valores, cultura)</li>
+          <li>📄 Currículo actualizado y adaptado al puesto</li>
+          <li>👔 Viste profesional (mejor pecar de formal)</li>
+          <li>👁️ Mantén contacto visual y postura erguida</li>
+          <li>🗣️ Responde claro y conciso (método STAR)</li>
+          <li>👂 Escucha activa, no interrumpas</li>
+          <li>❓ Prepara preguntas inteligentes para el entrevistador</li>
+          <li>💪 Muestra confianza y entusiasmo</li>
+        </ul>
+      </div>
+      <div class="entrev-card entrev-no">
+        <strong>❌ NO hacer</strong>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li>🚫 No conocer nada de la empresa</li>
+          <li>📋 Llevar currículum desactualizado o con errores</li>
+          <li>😒 Postura desganada o falta de contacto visual</li>
+          <li>😤 Hablar mal de empleadores anteriores</li>
+          <li>💬 Respuestas vagas sin ejemplos concretos</li>
+          <li>🙄 Mostrar arrogancia o desdén</li>
+          <li>😐 Falta de interés o entusiasmo por el puesto</li>
+          <li>📵 Revisar el móvil o interrumpir al entrevistador</li>
+        </ul>
+      </div>
+    </div>
+    <div class="recuerda" style="margin-top:0.8rem;">
+      <div class="recuerda-titulo">⭐ Recuerda siempre</div>
+      En la entrevista, el método <strong>STAR</strong> es tu mejor aliado: cuenta tus logros con contexto, acción y resultados medibles. Practica en voz alta antes de ir.
+    </div>
+  </div>
+
+</div>
+
+<footer class="pie">
+  IPEI · Tema 4 — Autoorientación y Hoja de Ruta para la Inserción Profesional &nbsp;|&nbsp; Resumen visual para estudio
+</footer>
+
+</body>
+</html>

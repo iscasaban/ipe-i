@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPEI — Examen de Simulación · Modelo 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primario: #00b4d8;
+      --color-primario-oscuro: #0077b6;
+      --color-fondo: #f0f8ff;
+      --color-blanco: #ffffff;
+      --color-texto: #1d3557;
+      --color-texto-suave: #4a6580;
+      --color-tag-bg: #e0f7fa;
+      --color-border: #cce3f0;
+      --color-border-light: #ddeef8;
+      --color-correct-bg: #e6f9f2;
+      --color-correct-text: #1a7a55;
+      --color-wrong-bg: #fdeaea;
+      --color-wrong-text: #b83232;
+      --radio: 14px;
+      --radio-sm: 8px;
+      --sombra: 0 4px 18px rgba(0,119,182,0.10);
+      --fuente-titulo: 'Raleway', sans-serif;
+      --fuente-cuerpo: 'Nunito', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--fuente-cuerpo),sans-serif; background: var(--color-fondo); color: var(--color-texto); min-height: 100vh; line-height: 1.6; }
+    #quiz-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.2rem 3rem; }
+    .qz-header { background: linear-gradient(135deg, #005f8e 0%, #0096c7 100%); color: #fff; padding: 1.6rem 1.5rem 1.2rem; border-radius: var(--radio) var(--radio) 0 0; position: relative; overflow: hidden; }
+    .qz-header::before { content: '3'; font-family: var(--fuente-titulo),sans-serif; font-size: 6rem; font-weight: 900; opacity: 0.10; position: absolute; right: 1rem; top: -0.5rem; line-height: 1; }
+    .qz-header .modelo-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.8; margin-bottom: 0.3rem; }
+    .qz-header h1 { font-family: var(--fuente-titulo),sans-serif; font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 900; line-height: 1.2; }
+    .qz-header .subtitle { font-size: 0.82rem; opacity: 0.8; margin-top: 0.3rem; }
+    .pb-wrap { height: 5px; background: rgba(255,255,255,0.25); }
+    .pb { height: 100%; background: #fff; border-radius: 0 3px 3px 0; transition: width 0.35s ease; }
+    .qz-body { background: var(--color-blanco); border-radius: 0 0 var(--radio) var(--radio); box-shadow: var(--sombra); padding: 1.6rem 1.5rem 1.4rem; }
+    .stats-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--color-texto-suave); margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--color-border-light); }
+    .stats-bar .qnum { font-weight: 800; color: var(--color-primario-oscuro); font-size: 0.88rem; }
+    .section-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-primario); background: var(--color-tag-bg); display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px; margin-bottom: 0.8rem; }
+    .qt { font-size: 1rem; font-weight: 700; color: var(--color-texto); line-height: 1.5; margin-bottom: 1.2rem; }
+    .opts { display: flex; flex-direction: column; gap: 0.6rem; }
+    .opt { display: flex; align-items: center; gap: 0.8rem; padding: 0.7rem 1rem; border-radius: var(--radio-sm); border: 1.5px solid var(--color-border); background: var(--color-blanco); cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--color-texto-suave); text-align: left; transition: border-color 0.15s, background 0.15s, transform 0.12s; width: 100%; }
+    .opt:hover:not(:disabled) { border-color: var(--color-primario); background: #f0faff; transform: translateX(3px); }
+    .opt:disabled { cursor: default; }
+    .olbl { min-width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 800; flex-shrink: 0; transition: background 0.15s, border-color 0.15s, color 0.15s; font-family: var(--fuente-titulo),sans-serif; }
+    .opt.selected { border-color: var(--color-primario-oscuro); background: #e8f4ff; color: var(--color-primario-oscuro); }
+    .opt.selected .olbl { background: var(--color-primario-oscuro); border-color: var(--color-primario-oscuro); color: #fff; }
+    .opt.correct { border-color: #1D9E75; background: var(--color-correct-bg); color: var(--color-correct-text); }
+    .opt.correct .olbl { background: #1D9E75; border-color: #1D9E75; color: #fff; }
+    .opt.wrong { border-color: #E24B4A; background: var(--color-wrong-bg); color: var(--color-wrong-text); }
+    .opt.wrong .olbl { background: #E24B4A; border-color: #E24B4A; color: #fff; }
+    .exp-box { margin-top: 1rem; padding: 0.8rem 1rem; background: #f5fbff; border-left: 4px solid var(--color-primario); border-radius: var(--radio-sm); font-size: 0.84rem; color: var(--color-texto-suave); font-style: italic; display: none; }
+    .exp-box.visible { display: block; }
+    .nav { display: flex; align-items: center; justify-content: space-between; margin-top: 1.4rem; gap: 0.6rem; }
+    .btn { padding: 0.6rem 1.2rem; border-radius: var(--radio-sm); border: 1.5px solid var(--color-border); background: var(--color-blanco); color: var(--color-texto-suave); font-family: var(--fuente-cuerpo),sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.15s, border-color 0.15s, filter 0.15s; }
+    .btn:hover:not(:disabled) { background: var(--color-fondo); border-color: var(--color-primario); }
+    .btn:disabled { opacity: 0.35; cursor: default; }
+    .btn.pri { background: var(--color-primario-oscuro); border-color: var(--color-primario-oscuro); color: #fff; }
+    .btn.pri:hover:not(:disabled) { filter: brightness(0.88); }
+    .btn.blank { font-size: 0.8rem; color: var(--color-texto-suave); }
+    .res { padding: 1rem 0; text-align: center; }
+    .sc-circle { width: 110px; height: 110px; border-radius: 50%; border: 5px solid var(--color-primario); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .sc-circle.passed { border-color: #1D9E75; } .sc-circle.failed { border-color: #E24B4A; }
+    .sc-big { font-family: var(--fuente-titulo),sans-serif; font-size: 2rem; font-weight: 900; color: var(--color-texto); }
+    .sc-den { font-size: 0.72rem; color: var(--color-texto-suave); }
+    .res-t { font-family: var(--fuente-titulo),sans-serif; font-size: 1.3rem; font-weight: 900; color: var(--color-primario-oscuro); margin-bottom: 0.3rem; }
+    .res-s { font-size: 0.82rem; color: var(--color-texto-suave); margin-bottom: 1.2rem; }
+    .score-formula { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 1.2rem; font-size: 0.82rem; }
+    .sf-item { padding: 4px 10px; border-radius: 20px; font-weight: 700; }
+    .correct-sf { background: var(--color-correct-bg); color: var(--color-correct-text); }
+    .wrong-sf { background: var(--color-wrong-bg); color: var(--color-wrong-text); }
+    .sf-sep { color: var(--color-texto-suave); font-weight: 700; }
+    .sf-result { font-weight: 800; color: var(--color-texto); font-size: 0.94rem; }
+    .sg { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .sc { text-align: center; }
+    .sc-n { font-family: var(--fuente-titulo),sans-serif; font-size: 1.5rem; font-weight: 900; }
+    .sc-l { font-size: 0.75rem; color: var(--color-texto-suave); font-weight: 600; }
+    .rev { margin-top: 1.5rem; text-align: left; }
+    .rev-t { font-family: var(--fuente-titulo),sans-serif; font-size: 1rem; font-weight: 900; color: var(--color-primario-oscuro); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--color-tag-bg); }
+    .tema-block { margin-bottom: 1.4rem; }
+    .tema-block-title { font-size: 0.72rem; font-weight: 700; color: var(--color-texto-suave); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px dashed var(--color-border-light); }
+    .ri { padding: 0.7rem 0.9rem; border-radius: var(--radio-sm); border: 1.5px solid var(--color-correct-bg); background: var(--color-correct-bg); margin-bottom: 0.5rem; font-size: 0.83rem; color: var(--color-correct-text); }
+    .ri.rw { background: var(--color-wrong-bg); border-color: var(--color-wrong-bg); color: var(--color-wrong-text); }
+    .ri.rb { background: #f5f5f5; border-color: #e0e0e0; color: #888; }
+    .ri-detail { display: block; margin-top: 4px; font-size: 0.78rem; }
+    .ri-exp { display: block; margin-top: 4px; font-size: 0.76rem; opacity: 0.8; font-style: italic; color: var(--color-texto-suave); }
+    .btn-reiniciar { margin: 0.5rem auto 1.5rem; display: block; }
+    @media (max-width: 500px) { .nav .btn.blank { display: none; } .score-formula { font-size: 0.75rem; } .sg { gap: 1rem; } }
+  </style>
+</head>
+<body>
+<div id="quiz-wrap">
+  <div class="qz-header">
+    <div class="pb-wrap"><div class="pb" id="pb" style="width:0%"></div></div>
+    <div style="padding: 1rem 0 0;">
+      <div class="modelo-label">IPEI · Examen de Simulación</div>
+      <h1>Modelo 3 — 40 preguntas</h1>
+      <div class="subtitle">T1 · T2 · T3 · T4 · T5 &nbsp;|&nbsp; Respuestas incorrectas restan ¼ del valor</div>
+    </div>
+  </div>
+  <div class="qz-body" id="qz-body"></div>
+</div>
+<script>
+  const TEMAS = {
+    1: "Tema 1 · Características del Sector Productivo",
+    2: "Tema 2 · Prevención de Riesgos Laborales",
+    3: "Tema 3 · Derecho Laboral",
+    4: "Tema 4 · Autoorientación e Inserción Profesional",
+    5: "Tema 5 · Estrategias de Aprendizaje Autónomo"
+  };
+
+  const qs = [
+    // ── TEMA 1 (P17–P24) ──
+    { tema:1, q:"¿Qué es la cualificación profesional?", opts:["El número de años de experiencia laboral","El nivel de estudios alcanzado","Las competencias profesionales necesarias para llevar a cabo las actividades de una profesión","El salario mínimo establecido para un puesto de trabajo"], c:2, exp:"La cualificación profesional es el conjunto de competencias profesionales necesarias para desarrollar las actividades de una profesión de forma eficaz." },
+    { tema:1, q:"¿Qué es la unidad de competencia?", opts:["El conjunto de todas las competencias de una persona","La agrupación mínima de competencias susceptible de acreditación","El módulo formativo asociado a una titulación","El nivel máximo de cualificación en el CNCP"], c:1, exp:"La unidad de competencia es la agrupación mínima de competencias profesionales susceptible de reconocimiento y acreditación parcial." },
+    { tema:1, q:"¿Cuántas familias profesionales recoge el Catálogo Nacional de Cualificaciones Profesionales (CNCP)?", opts:["16 familias","20 familias","26 familias","32 familias"], c:2, exp:"El CNCP recoge 26 familias profesionales que agrupan las cualificaciones por ámbitos de actividad económica." },
+    { tema:1, q:"¿En cuántos niveles de cualificación se estructura el CNCP?", opts:["Dos: básico y avanzado","Tres: básico, medio y superior","Cuatro: inicial, básico, medio y superior","Cinco niveles europeos de cualificación"], c:1, exp:"El CNCP se estructura en tres niveles de cualificación: básico, medio y superior, en correspondencia con el sistema educativo." },
+    { tema:1, q:"¿Qué organismo se encarga de mantener actualizado el CNCP?", opts:["El Ministerio de Educación","El SEPE (Servicio Público de Empleo Estatal)","El Instituto Nacional de las Cualificaciones","La Inspección de Trabajo"], c:2, exp:"El Instituto Nacional de las Cualificaciones (INCUAL) es el organismo responsable de mantener actualizado el CNCP." },
+    { tema:1, q:"¿Cuál es la función principal del Sistema Nacional de Cualificaciones y Formación Profesional?", opts:["Gestionar las prestaciones por desempleo","Promover la integración de las ofertas de FP y la acreditación de competencias","Regular los convenios colectivos de los trabajadores","Supervisar las oposiciones a la función pública"], c:1, exp:"El Sistema Nacional de Cualificaciones y Formación Profesional promueve la integración de las ofertas de FP y la acreditación de competencias adquiridas." },
+    { tema:1, q:"¿A qué se llama \"análisis del perfil profesional\"?", opts:["Estudiar las tendencias de empleo en el mercado global","Evaluar la correspondencia entre las competencias requeridas por empleadores y las ofrecidas por candidatos","Revisar el currículum vítae de un candidato","Analizar las condiciones económicas de un sector"], c:1, exp:"El análisis del perfil profesional evalúa la correspondencia entre las competencias que demandan los empleadores y las que ofrece el candidato." },
+    { tema:1, q:"Una empresa que quiere adaptar su CV y carta de presentación a una oferta concreta, ¿qué debe hacer primero?", opts:["Llamar directamente a la empresa para pedir la entrevista","Enviar el CV sin personalizar para ahorrar tiempo","Analizar correctamente la oferta: puesto, requisitos y condiciones","Publicar el CV en todas las bolsas de empleo disponibles"], c:2, exp:"Antes de personalizar cualquier documento, es imprescindible analizar la oferta en detalle: puesto, requisitos exigidos y condiciones." },
+    // ── TEMA 2 (P41–P48) ──
+    { tema:2, q:"¿Cuándo está obligada una empresa a tener un Comité de Seguridad y Salud?", opts:["Cuando tiene más de 10 trabajadores","Cuando tiene más de 25 trabajadores","Cuando tiene 50 o más trabajadores","Cuando tiene más de 100 trabajadores"], c:2, exp:"La empresa está obligada a constituir un Comité de Seguridad y Salud cuando cuenta con 50 o más trabajadores." },
+    { tema:2, q:"¿Con qué frecuencia mínima se reúne el Comité de Seguridad y Salud?", opts:["Mensualmente","Trimestralmente","Semestralmente","Anualmente"], c:1, exp:"El Comité de Seguridad y Salud debe reunirse trimestralmente como mínimo, o siempre que lo solicite alguna de las representaciones." },
+    { tema:2, q:"Las señales con fondo amarillo y forma triangular son señales de:", opts:["Obligación","Prohibición","Salvamento","Advertencia"], c:3, exp:"Las señales de advertencia tienen fondo amarillo y forma triangular, y alertan sobre un peligro o riesgo potencial." },
+    { tema:2, q:"¿Qué significan las siglas PAS en primeros auxilios?", opts:["Proteger, Actuar, Señalizar","Proteger, Avisar, Socorrer","Prevenir, Alertar, Socorrer","Paralizar, Avisar, Salvar"], c:1, exp:"PAS son las siglas de Proteger (el entorno), Avisar (a los servicios de emergencia) y Socorrer (a la víctima)." },
+    { tema:2, q:"En el sistema de triaje, ¿qué color corresponde a las víctimas graves pero recuperables que necesitan atención inmediata?", opts:["Amarillo","Verde","Negro","Rojo"], c:3, exp:"El color rojo en el triaje corresponde a las víctimas graves pero recuperables que requieren atención inmediata para sobrevivir." },
+    { tema:2, q:"¿Cuál es el ritmo de compresiones en una RCP?", opts:["60 compresiones por minuto","80 compresiones por minuto","100 compresiones por minuto","120 compresiones por minuto"], c:2, exp:"El ritmo recomendado de compresiones torácicas en una RCP es de 100 compresiones por minuto." },
+    { tema:2, q:"¿Qué organismo tiene su sede en Bilbao y es el encargado de fomentar la mejora del entorno de trabajo a nivel europeo?", opts:["La OIT","El INSST","La Agencia Europea para la Seguridad y Salud en el Trabajo","La Comisión Nacional de Seguridad y Salud en el Trabajo"], c:2, exp:"La Agencia Europea para la Seguridad y Salud en el Trabajo (EU-OSHA) tiene su sede en Bilbao y trabaja para mejorar el entorno laboral europeo." },
+    { tema:2, q:"¿Cuál es la diferencia clave entre medidas de prevención y medidas de protección?", opts:["Las medidas de protección son gratuitas; las de prevención no","Las medidas de prevención actúan sobre el origen del riesgo para evitarlo; las de protección reducen el daño una vez el riesgo existe","Las medidas de prevención son solo para el empresario; las de protección para el trabajador","No existe diferencia real entre ambos conceptos"], c:1, exp:"Las medidas de prevención eliminan o reducen el riesgo en su origen; las de protección actúan para minimizar el daño cuando el riesgo ya existe." },
+    // ── TEMA 3 (P17–P24) ──
+    { tema:3, q:"¿Cuál es la duración máxima legal de la jornada de trabajo en cómputo anual?", opts:["38 horas semanales","40 horas semanales de media","42 horas semanales","35 horas semanales"], c:1, exp:"La jornada máxima legal es de 40 horas semanales de trabajo efectivo en cómputo anual." },
+    { tema:3, q:"¿Cuántos días de permiso retribuido tiene un trabajador por matrimonio?", opts:["10 días naturales","2 días hábiles","15 días naturales","7 días naturales"], c:2, exp:"El trabajador tiene derecho a 15 días naturales de permiso retribuido por matrimonio." },
+    { tema:3, q:"¿Qué organismo protege al trabajador pagando su salario pendiente cuando la empresa es declarada insolvente?", opts:["El INSS","El SEPE","El FOGASA","La Inspección de Trabajo"], c:2, exp:"El FOGASA (Fondo de Garantía Salarial) garantiza el pago de salarios e indemnizaciones cuando la empresa es declarada insolvente." },
+    { tema:3, q:"¿Cuál de los siguientes conceptos NO forma parte de los devengos de una nómina?", opts:["Salario base","Complementos salariales","Retención del IRPF","Complementos extrasalariales"], c:2, exp:"La retención del IRPF no es un devengo sino una deducción: es una cantidad que se resta del total devengado para ingresarla a Hacienda." },
+    { tema:3, q:"Un despido es declarado improcedente por el juzgado. ¿A qué indemnización tiene derecho el trabajador si la empresa opta por no readmitirlo?", opts:["20 días por año trabajado con un máximo de 12 mensualidades","33 días por año trabajado con un máximo de 24 mensualidades","45 días por año trabajado con un máximo de 42 mensualidades","20 días por año trabajado con un máximo de 9 mensualidades"], c:1, exp:"La indemnización por despido improcedente es de 33 días por año trabajado, con un máximo de 24 mensualidades." },
+    { tema:3, q:"¿Cuántos días hábiles tiene el trabajador para impugnar un despido desde que recibe la comunicación?", opts:["15 días hábiles","30 días naturales","20 días hábiles","10 días hábiles"], c:2, exp:"El plazo para impugnar un despido es de 20 días hábiles a contar desde la fecha de efectividad del despido." },
+    { tema:3, q:"¿Cuál de los siguientes métodos de resolución de conflictos genera una decisión de obligado cumplimiento para ambas partes?", opts:["Conciliación","Mediación","Negociación","Arbitraje"], c:3, exp:"El arbitraje genera un laudo arbitral de obligado cumplimiento para ambas partes, a diferencia de la conciliación o mediación." },
+    { tema:3, q:"¿Cuánto cobra un trabajador de baja por enfermedad común a partir del día 21 de incapacidad temporal?", opts:["El 60% de su base reguladora","El 75% de su base reguladora","El 100% de su base reguladora","El 50% de su base reguladora"], c:1, exp:"A partir del día 21 de incapacidad temporal por enfermedad común, el trabajador percibe el 75% de su base reguladora." },
+    // ── TEMA 4 (P17–P24) ──
+    { tema:4, q:"Al concretar las expectativas de inserción laboral, ¿qué se debe investigar primero?", opts:["El salario exacto que ofrecerán","Los sectores en crecimiento y las empresas de interés del mercado","El número de días de vacaciones del convenio","El tipo de contrato más habitual en la empresa"], c:1, exp:"Al concretar expectativas de inserción, el primer paso es investigar los sectores en crecimiento y las empresas de interés presentes en el mercado." },
+    { tema:4, q:"¿Cuál es una estrategia correcta para alinear expectativas con el mercado laboral?", opts:["Exigir el salario máximo desde el primer empleo","Ignorar las ofertas de empleo y esperar a que te llamen","Comparar tus habilidades con los requisitos reales y detectar brechas","Aplicar solo a puestos directivos"], c:2, exp:"Comparar las propias habilidades con los requisitos reales de las ofertas permite detectar brechas y planificar cómo cerrarlas." },
+    { tema:4, q:"Para poner en valor tus logros, el tema recomienda:", opts:["Describirlos de forma general y sin datos","Cuantificarlos con números y datos concretos siempre que sea posible","Omitirlos si son de hace más de un año","Incluirlos solo en el portafolio, nunca en el currículum"], c:1, exp:"Cuantificar los logros con números y datos concretos los hace más creíbles y memorables para el seleccionador." },
+    { tema:4, q:"¿Cuál de estas actitudes se debe EVITAR en una entrevista de trabajo?", opts:["Mantener contacto visual con el entrevistador","Hablar negativamente de antiguos empleadores","Usar el método STAR para responder","Llevar copias adicionales del currículum"], c:1, exp:"Hablar negativamente de antiguos empleadores proyecta una imagen negativa y debe evitarse en toda entrevista de trabajo." },
+    { tema:4, q:"¿Qué tipo de preguntas se recomienda preparar para hacer al entrevistador?", opts:["Preguntas sobre el salario en los primeros 5 minutos","Ninguna, solo hay que responder","Preguntas que demuestren interés genuino en el puesto y la empresa","Preguntas sobre los defectos de la empresa"], c:2, exp:"Preparar preguntas que demuestren interés genuino en el puesto y la empresa es señal de motivación y profesionalidad." },
+    { tema:4, q:"Según el tema, ¿cuál es la primera etapa para construir un proyecto profesional?", opts:["Buscar ofertas de empleo de inmediato","El autoconocimiento: identificar fortalezas, debilidades, intereses y valores","Actualizar el perfil de LinkedIn","Apuntarse a todos los cursos disponibles"], c:1, exp:"El autoconocimiento es la primera etapa para construir un proyecto profesional: conocerse permite tomar decisiones alineadas con los propios valores." },
+    { tema:4, q:"¿Cuál de estas herramientas sirve para integrar objetivos personales y profesionales?", opts:["El finiquito","El convenio colectivo","Calendarios y aplicaciones de gestión del tiempo","El registro de la propiedad intelectual"], c:2, exp:"Los calendarios y aplicaciones de gestión del tiempo permiten integrar y planificar tanto objetivos personales como profesionales." },
+    { tema:4, q:"Al monitorear el plan de acción, ¿con qué frecuencia recomienda el tema revisar el progreso?", opts:["Solo al final del año","Una vez cada cinco años","Cada mes, ajustando el plan según los avances y nuevas circunstancias","Solo cuando se encuentre empleo"], c:2, exp:"El tema recomienda revisar el plan de acción mensualmente para ajustarlo según los avances obtenidos y las nuevas circunstancias." },
+    // ── TEMA 5 (P17–P24) ──
+    { tema:5, q:"¿Qué es la identidad digital?", opts:["El nombre de usuario y contraseña de tus cuentas en línea","El conjunto de información sobre una persona disponible en línea","El perfil físico que presentas en una entrevista de trabajo","El historial de búsquedas en Internet"], c:1, exp:"La identidad digital es el conjunto de información sobre una persona que está disponible en línea, incluyendo perfiles, publicaciones y actividad." },
+    { tema:5, q:"¿Por qué es importante la coherencia en la identidad digital para la empleabilidad?", opts:["Porque permite tener más seguidores en redes sociales","Porque los empleadores buscan candidatos cuya identidad digital sea consistente con su currículum","Porque mejora el posicionamiento en motores de búsqueda","Porque facilita el acceso a plataformas de aprendizaje gratuitas"], c:1, exp:"La coherencia entre la identidad digital y el currículum transmite profesionalidad y credibilidad a los empleadores." },
+    { tema:5, q:"¿Qué significa PDI en el contexto del tema?", opts:["Programa de Desarrollo Institucional","Plan de Dedicación Individual","Plan de Desarrollo Individual","Plataforma Digital Integrada"], c:2, exp:"PDI son las siglas de Plan de Desarrollo Individual, una hoja de ruta personalizada para el crecimiento profesional." },
+    { tema:5, q:"¿Qué herramienta de análisis se utiliza en el primer paso del PDI?", opts:["La metodología STAR","El análisis FODA (Fortalezas, Oportunidades, Debilidades, Amenazas)","La metodología SMART","El diagrama de Gantt"], c:1, exp:"El análisis FODA se utiliza en el primer paso del PDI para identificar la situación de partida: fortalezas, debilidades, oportunidades y amenazas." },
+    { tema:5, q:"En el PDI, ¿cómo se clasifican las metas según el plazo?", opts:["Urgentes, importantes y prescindibles","Corto plazo (6m–1 año), medio plazo (1–3 años) y largo plazo (3–5 años o más)","Diarias, semanales y mensuales","Técnicas, blandas y transversales"], c:1, exp:"El PDI clasifica las metas en: corto plazo (6 meses a 1 año), medio plazo (1 a 3 años) y largo plazo (3 a 5 años o más)." },
+    { tema:5, q:"¿Para qué sirve Trello según el tema?", opts:["Para buscar literatura académica y científica","Para aprender idiomas de forma interactiva","Para gestionar proyectos y tareas mediante tableros y listas, haciendo seguimiento del progreso","Para publicar artículos de opinión profesional"], c:2, exp:"Trello es una herramienta de gestión de proyectos y tareas mediante tableros y listas que facilita el seguimiento del progreso." },
+    { tema:5, q:"¿Qué plataforma del tema está enfocada específicamente en la enseñanza de lenguajes de programación y desarrollo web?", opts:["Duolingo","Feedly","Codecademy","Penzu"], c:2, exp:"Codecademy es la plataforma de aprendizaje enfocada específicamente en lenguajes de programación y desarrollo web." },
+    { tema:5, q:"¿Cuál de las siguientes afirmaciones resume mejor el mensaje central del Tema 5?", opts:["La formación reglada es suficiente para mantenerse empleable a lo largo de toda la carrera","El aprendizaje autónomo, un PLE bien diseñado, una identidad digital cuidada y un PDI actualizado son la base de una empleabilidad sólida y duradera","Las redes sociales son el único recurso necesario para encontrar empleo en la era digital","La capacidad de adaptación es menos importante que los títulos académicos obtenidos"], c:1, exp:"El mensaje central del Tema 5 es que la combinación de aprendizaje autónomo, PLE, identidad digital cuidada y PDI actualizado constituye la base de una empleabilidad robusta." }
+  ];
+
+  const SCORE_OK  = 10 / qs.length;
+  const SCORE_BAD = -SCORE_OK / 4;
+  let cur = 0, answered = Array(qs.length).fill(null), selected = Array(qs.length).fill(null), showRes = false;
+
+  function calcScore() {
+    let s = 0;
+    qs.forEach((q, i) => {
+      if (answered[i] === null) return;
+      s += answered[i] === q.c ? SCORE_OK : SCORE_BAD;
+    });
+    return s;
+  }
+
+  function render() {
+    if (showRes) { renderRes(); return; }
+    const q = qs[cur];
+    const isAns = answered[cur] !== null;
+    const prog = ((cur + 1) / qs.length) * 100;
+    const prevTema = cur > 0 ? qs[cur - 1].tema : null;
+    const showLabel = !prevTema || prevTema !== q.tema;
+    document.getElementById('pb').style.width = prog + '%';
+    const body = document.getElementById('qz-body');
+    body.innerHTML = `
+    <div class="stats-bar">
+      <span class="qnum">Pregunta ${cur + 1} / ${qs.length}</span>
+      <span>${answered.filter(a => a !== null).length} respondidas · ${answered.filter(a => a === null).length} restantes</span>
+    </div>
+    ${showLabel ? `<div class="section-label">${TEMAS[q.tema]}</div>` : ''}
+    <div class="qt">${q.q}</div>
+    <div class="opts">
+      ${q.opts.map((o, i) => {
+      let cls = 'opt';
+      if (isAns && i === selected[cur]) cls += ' selected';
+      return `<button class="${cls}" onclick="ans(${i})" ${isAns ? 'disabled' : ''}>
+          <span class="olbl">${String.fromCharCode(65+i)}</span>
+          <span>${o}</span>
+        </button>`;
+    }).join('')}
+    </div>
+    <div class="exp-box">${q.exp}</div>
+    <div class="nav">
+      <button class="btn" onclick="go(-1)" ${cur === 0 ? 'disabled' : ''}>← Anterior</button>
+      <button class="btn blank" onclick="goBlank()">Dejar en blanco →</button>
+      ${cur === qs.length - 1
+            ? `<button class="btn pri" onclick="tryFinish()">Ver resultados →</button>`
+            : `<button class="btn pri" onclick="go(1)">Siguiente →</button>`}
+    </div>`;
+  }
+
+  function ans(idx) {
+    if (answered[cur] !== null) return;
+    selected[cur] = idx; answered[cur] = idx; render();
+  }
+  function goBlank() { go(1); }
+  function go(d) {
+    const next = cur + d;
+    if (next < 0) return;
+    if (next >= qs.length) { tryFinish(); return; }
+    cur = next; render();
+  }
+  function tryFinish() {
+    const u = answered.filter(a => a === null).length;
+    if (u > 0) { if (!confirm(`Tienes ${u} pregunta(s) sin responder.\nLas preguntas en blanco no suman ni restan.\n\n¿Finalizar el examen?`)) return; }
+    showRes = true; render();
+  }
+  function renderRes() {
+    const correct = qs.filter((q, i) => answered[i] === q.c).length;
+    const wrong   = qs.filter((q, i) => answered[i] !== null && answered[i] !== q.c).length;
+    const blank   = qs.filter((q, i) => answered[i] === null).length;
+    const raw = calcScore(); const final = Math.max(0, raw); const display = final.toFixed(2);
+    const passed = final >= 5;
+    const msg = final >= 9 ? '¡Excelente resultado!' : final >= 7 ? 'Buen trabajo' : final >= 5 ? 'Aprobado' : 'Suspenso';
+    const temas = [...new Set(qs.map(q => q.tema))];
+    document.getElementById('pb').style.width = '100%';
+    document.getElementById('qz-body').innerHTML = `
+    <div class="res">
+      <div class="sc-circle ${passed ? 'passed' : 'failed'}">
+        <span class="sc-big">${display}</span><span class="sc-den">sobre 10</span>
+      </div>
+      <div class="res-t">${msg}</div>
+      <div class="res-s">Modelo 3 · Examen de simulación IPEI</div>
+      <div class="score-formula">
+        <span class="sf-item correct-sf">✓ ${correct} correctas × ${SCORE_OK.toFixed(4)}</span>
+        <span class="sf-sep">−</span>
+        <span class="sf-item wrong-sf">✗ ${wrong} incorrectas × ${Math.abs(SCORE_BAD).toFixed(4)}</span>
+        <span class="sf-sep">=</span>
+        <span class="sf-result">${raw.toFixed(4)}</span>
+      </div>
+      <div class="sg">
+        <div class="sc"><div class="sc-n" style="color:#1D9E75">${correct}</div><div class="sc-l">Correctas</div></div>
+        <div class="sc"><div class="sc-n" style="color:#E24B4A">${wrong}</div><div class="sc-l">Incorrectas</div></div>
+        <div class="sc"><div class="sc-n" style="color:#888">${blank}</div><div class="sc-l">En blanco</div></div>
+      </div>
+      <button class="btn pri btn-reiniciar" onclick="restart()">Repetir examen</button>
+      <div class="rev">
+        <div class="rev-t">Repaso por temas</div>
+        ${temas.map(tema => {
+      const tqs = qs.map((q,i)=>({...q,idx:i})).filter(q=>q.tema===tema);
+      return `<div class="tema-block">
+            <div class="tema-block-title">${TEMAS[tema]}</div>
+            ${tqs.map(q => {
+        const isC = answered[q.idx] === q.c; const wasA = answered[q.idx] !== null;
+        const cls = wasA ? (isC ? 'rc' : 'rw') : 'rb';
+        return `<div class="ri ${cls}"><strong>P${q.idx+1}:</strong> ${q.q}
+                <span class="ri-detail">${wasA ? (isC ? '✓ Tu respuesta: ' + q.opts[answered[q.idx]] : '✗ Tu respuesta: ' + q.opts[answered[q.idx]] + ' · Correcta: ' + q.opts[q.c]) : '— En blanco · Correcta: ' + q.opts[q.c]}</span>
+                <span class="ri-exp">${q.exp}</span></div>`;
+      }).join('')}
+          </div>`;
+    }).join('')}
+      </div>
+    </div>`;
+  }
+  function restart() {
+    cur = 0; answered = Array(qs.length).fill(null); selected = Array(qs.length).fill(null); showRes = false; render();
+  }
+  render();
+</script>
+</body>
+</html>
