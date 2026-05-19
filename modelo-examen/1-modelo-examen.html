@@ -41,14 +41,14 @@
       line-height: 1.6;
     }
 
-    /* ── QUIZ WRAPPER ── */
+    /*  QUIZ WRAPPER  */
     #quiz-wrap {
       max-width: 720px;
       margin: 0 auto;
       padding: 1.5rem 1.2rem 3rem;
     }
 
-    /* ── HEADER ── */
+    /*  HEADER  */
     .qz-header {
       background: linear-gradient(135deg, var(--color-primario-oscuro) 0%, var(--color-primario) 100%);
       color: #fff;
@@ -88,7 +88,7 @@
       margin-top: 0.3rem;
     }
 
-    /* ── PROGRESS ── */
+    /*  PROGRESS  */
     .pb-wrap {
       height: 5px;
       background: rgba(255,255,255,0.25);
@@ -101,7 +101,7 @@
       transition: width 0.35s ease;
     }
 
-    /* ── MAIN CARD ── */
+    /*  MAIN CARD  */
     .qz-body {
       background: var(--color-blanco);
       border-radius: 0 0 var(--radio) var(--radio);
@@ -109,7 +109,7 @@
       padding: 1.6rem 1.5rem 1.4rem;
     }
 
-    /* ── STATS BAR ── */
+    /*  STATS BAR  */
     .stats-bar {
       display: flex;
       justify-content: space-between;
@@ -126,7 +126,7 @@
       font-size: 0.88rem;
     }
 
-    /* ── SECTION LABEL ── */
+    /*  SECTION LABEL  */
     .section-label {
       font-size: 0.72rem;
       font-weight: 700;
@@ -140,7 +140,7 @@
       margin-bottom: 0.8rem;
     }
 
-    /* ── QUESTION ── */
+    /*  QUESTION  */
     .qt {
       font-size: 1rem;
       font-weight: 700;
@@ -149,7 +149,7 @@
       margin-bottom: 1.2rem;
     }
 
-    /* ── OPTIONS ── */
+    /*  OPTIONS  */
     .opts { display: flex; flex-direction: column; gap: 0.6rem; }
 
     .opt {
@@ -158,7 +158,7 @@
       gap: 0.8rem;
       padding: 0.7rem 1rem;
       border-radius: var(--radio-sm);
-      border: 1.5px solid var(--color-border);
+      border: 2px solid var(--color-border);
       background: var(--color-blanco);
       cursor: pointer;
       font-size: 0.9rem;
@@ -202,7 +202,7 @@
     .opt.show-correct { border-color: #1D9E75; background: var(--color-correct-bg); color: var(--color-correct-text); }
     .opt.show-correct .olbl { background: #1D9E75; border-color: #1D9E75; color: #fff; }
 
-    /* ── EXPLANATION ── */
+    /*  EXPLANATION  */
     .exp-box {
       margin-top: 1rem;
       padding: 0.8rem 1rem;
@@ -216,7 +216,7 @@
     }
     .exp-box.visible { display: block; }
 
-    /* ── NAV ── */
+    /*  NAV  */
     .nav {
       display: flex;
       align-items: center;
@@ -227,7 +227,7 @@
     .btn {
       padding: 0.6rem 1.2rem;
       border-radius: var(--radio-sm);
-      border: 1.5px solid var(--color-border);
+      border: 2px solid var(--color-border);
       background: var(--color-blanco);
       color: var(--color-texto-suave);
       font-family: var(--fuente-titulo),sans-serif,sans-serif;
@@ -246,7 +246,7 @@
     .btn.pri:hover:not(:disabled) { filter: brightness(0.88); }
     .btn.blank { font-size: 0.8rem; color: var(--color-texto-suave); }
 
-    /* ── RESULTS ── */
+    /*  RESULTS  */
     .res {
       background: var(--color-blanco);
       border-radius: var(--radio);
@@ -297,7 +297,7 @@
     .ri {
       padding: 0.7rem 0.9rem;
       border-radius: var(--radio-sm);
-      border: 1.5px solid var(--color-correct-bg);
+      border: 2px solid var(--color-correct-bg);
       background: var(--color-correct-bg);
       margin-bottom: 0.5rem;
       font-size: 0.83rem;
@@ -320,7 +320,7 @@
 <body>
 <div id="quiz-wrap">
   <div class="qz-header">
-    <div class="pb-wrap"><div class="pb" id="pb" style="width:0%"></div></div>
+    <div class="pb-wrap"><div class="pb" id="pb" style="width:0"></div></div>
     <div style="padding: 1rem 0 0;">
       <div class="modelo-label">IPEI · Examen de Simulación</div>
       <h1>Modelo 1 — 40 preguntas</h1>
@@ -340,7 +340,7 @@
   };
 
   const qs = [
-    // ── TEMA 1 (P01–P08) ──
+    // TEMA 1 (P01–P08) 
     { tema:1, q:"¿En cuántos grandes subsectores se divide el sector productivo?", opts:["Dos: público y privado","Tres: agrícola, industrial y de servicios","Cuatro: primario, secundario, terciario y cuaternario","Dos: bienes y servicios"], c:1, exp:"El sector productivo se divide en tres grandes subsectores: agrícola, industrial y de servicios." },
     { tema:1, q:"¿Qué evalúa el análisis del \"tamaño del mercado\" dentro del sector productivo?", opts:["El número de trabajadores de una empresa","Las barreras de entrada al mercado","La dimensión del mercado en términos de producción y consumo","El nivel de innovación tecnológica del sector"], c:2, exp:"El análisis del tamaño del mercado evalúa la dimensión del mercado en términos de producción y consumo." },
     { tema:1, q:"¿Cuál de los siguientes es un componente del perfil profesional?", opts:["El número de empleados de la empresa","Las competencias técnicas del candidato","El tamaño del mercado en el que trabaja","La oferta educativa disponible en el país"], c:1, exp:"Las competencias técnicas del candidato son un componente clave del perfil profesional." },
@@ -349,7 +349,7 @@
     { tema:1, q:"¿Cuáles son los tres factores a los que se puede asociar la existencia de nuevos yacimientos de ocupación?", opts:["Educación, sanidad y tecnología","Estilos de vida, servicios y regímenes fiscales","Demografía, economía y legislación","Globalización, digitalización y sostenibilidad"], c:1, exp:"Los nuevos yacimientos de ocupación se asocian a estilos de vida, servicios y regímenes fiscales." },
     { tema:1, q:"¿Cuáles son los principales yacimientos de ocupación en España?", opts:["Minería, agricultura y pesca","Envejecimiento de la población, ecología y nuevas tecnologías aplicadas al marketing digital","Construcción, turismo y hostelería","Administración pública, sanidad y educación"], c:1, exp:"En España, los principales yacimientos de ocupación son el envejecimiento de la población, la ecología y las nuevas tecnologías aplicadas al marketing digital." },
     { tema:1, q:"¿Qué es la Oferta Pública de Empleo (OPE)?", opts:["Un portal web de ofertas de trabajo del sector privado","El proceso anual en que las Administraciones anuncian plazas disponibles mediante oposiciones","Un servicio de intermediación laboral para desempleados","Un contrato de trabajo temporal con la Administración"], c:1, exp:"La OPE es el proceso anual por el que las Administraciones públicas anuncian las plazas disponibles que se cubrirán mediante oposiciones o concursos." },
-    // ── TEMA 2 (P25–P32) ──
+    //  TEMA 2 (P25–P32) 
     { tema:2, q:"¿Qué es un riesgo profesional?", opts:["La probabilidad de que un trabajador sea despedido","La situación de peligro en la que una persona se encuentra por culpa del trabajo en condiciones peligrosas o nocivas","Cualquier enfermedad que padezca un trabajador","El nivel de estrés acumulado durante la jornada laboral"], c:1, exp:"Un riesgo profesional es la situación de peligro en la que una persona se encuentra por culpa del trabajo en condiciones peligrosas o nocivas." },
     { tema:2, q:"Según el método del INSST, ¿qué nivel de riesgo existe si la probabilidad es alta y las consecuencias son extremadamente perjudiciales?", opts:["Riesgo moderado","Riesgo importante","Riesgo intolerable","Riesgo tolerable"], c:2, exp:"Según el método del INSST, cuando la probabilidad es alta y las consecuencias son extremadamente perjudiciales, el nivel de riesgo es intolerable." },
     { tema:2, q:"¿Cuál es el primer paso en la evaluación de la prevención de riesgos?", opts:["Planificar la acción preventiva","Identificar los posibles riesgos laborales","Evaluar la gravedad de los accidentes ocurridos","Redactar el plan de prevención"], c:1, exp:"El primer paso en la evaluación de la prevención de riesgos es identificar los posibles riesgos laborales." },
@@ -358,7 +358,7 @@
     { tema:2, q:"¿Qué es el \"accidente blanco\"?", opts:["Un accidente que ocurre fuera del horario laboral","Un accidente sin daños personales, aunque puede causar daños materiales o interrumpir el trabajo","Un accidente provocado por condiciones climáticas adversas","Un accidente que solo afecta a trabajadores temporales"], c:1, exp:"El accidente blanco es aquel que no produce daños personales pero puede causar daños materiales o interrumpir el proceso de trabajo." },
     { tema:2, q:"¿Cuál de las siguientes NO es una patología inespecífica?", opts:["Fatiga","Estrés laboral","Burnout","Silicosis"], c:3, exp:"La silicosis es una enfermedad profesional específica causada por la inhalación de polvo de sílice, no una patología inespecífica." },
     { tema:2, q:"El estrés laboral se puede traducir en:", opts:["Mayor productividad y concentración","Agresividad, ansiedad, sensación de impotencia o frustración","Mejora de las relaciones laborales","Reducción de la jornada laboral"], c:1, exp:"El estrés laboral puede traducirse en agresividad, ansiedad, sensación de impotencia o frustración, entre otras manifestaciones." },
-    // ── TEMA 3 (P01–P08) ──
+    //  TEMA 3 (P01–P08) 
     { tema:3, q:"¿Cuál de las siguientes características NO forma parte del trabajo regulado por el derecho laboral?", opts:["Voluntario","Gratuito","Dependiente","Personal"], c:1, exp:"El trabajo regulado por el derecho laboral es voluntario, dependiente, personal y retribuido. La gratuidad lo excluye del ámbito laboral." },
     { tema:3, q:"¿Qué norma ocupa el nivel más alto en la jerarquía del ordenamiento laboral español?", opts:["El Estatuto de los Trabajadores","Los convenios colectivos","La Constitución Española de 1978","Los reales decretos"], c:2, exp:"La Constitución Española de 1978 ocupa el nivel más alto de la jerarquía normativa del ordenamiento laboral español." },
     { tema:3, q:"Los convenios colectivos son fuente exclusiva del derecho laboral. ¿Qué significa esto?", opts:["Solo pueden ser firmados por el Estado","No existen como fuente en otras ramas del derecho","Son obligatorios únicamente para los trabajadores","Solo tienen validez en el ámbito autonómico"], c:1, exp:"Que los convenios colectivos sean fuente exclusiva del derecho laboral significa que no existen como fuente en otras ramas del derecho." },
@@ -367,7 +367,7 @@
     { tema:3, q:"¿Cuál de los siguientes colectivos está EXCLUIDO del ámbito del Estatuto de los Trabajadores?", opts:["Trabajadores del hogar familiar","Penados en instituciones penitenciarias","Funcionarios públicos","Deportistas profesionales"], c:2, exp:"Los funcionarios públicos están excluidos del ámbito del Estatuto de los Trabajadores y se rigen por su propia normativa." },
     { tema:3, q:"¿En qué artículo del Estatuto de los Trabajadores se recogen los derechos básicos y específicos del trabajador?", opts:["Artículo 3","Artículo 5","Artículo 4","Artículo 6"], c:2, exp:"El artículo 4 del Estatuto de los Trabajadores recoge los derechos básicos y específicos de los trabajadores." },
     { tema:3, q:"¿Cuál de las siguientes es una OBLIGACIÓN del trabajador según el art. 5 ET?", opts:["Proporcionar equipos de protección individual","Elaborar el plan de prevención de riesgos","No concurrir con la actividad de la empresa","Vigilar el cumplimiento de la jornada laboral"], c:2, exp:"El artículo 5 ET establece como obligación del trabajador no concurrir con la actividad de la empresa, entre otras." },
-    // ── TEMA 4 (P01–P08) ──
+    //  TEMA 4 (P01–P08) 
     { tema:4, q:"¿Qué es el perfil disponible?", opts:["El conjunto de competencias que exige el mercado laboral","Las competencias, habilidades y experiencias que una persona posee en un momento dado","El plan de estudios que debe seguir un profesional","El perfil publicado en LinkedIn"], c:1, exp:"El perfil disponible es el conjunto de competencias, habilidades y experiencias que una persona posee en un momento dado." },
     { tema:4, q:"¿Qué es el perfil exigible?", opts:["Las habilidades que una persona tiene tras años de experiencia","El currículum vitae actualizado","El conjunto de competencias que se espera tener al finalizar un programa de estudios","Los requisitos mínimos para acceder a la universidad"], c:2, exp:"El perfil exigible es el conjunto de competencias que se espera tener al finalizar un programa de estudios o para acceder a un puesto." },
     { tema:4, q:"¿Cuál es el primer paso para comparar el perfil disponible con el exigible?", opts:["Crear un plan de acción inmediatamente","Identificar las competencias clave del programa académico y hacer un autoanálisis","Buscar ofertas de empleo en el sector","Pedir una carta de recomendación"], c:1, exp:"El primer paso es identificar las competencias clave del programa académico y realizar un autoanálisis para compararlas con las propias." },
@@ -376,7 +376,7 @@
     { tema:4, q:"¿Cuál de las siguientes NO es una competencia personal valorada para la empleabilidad?", opts:["Autoconfianza","Resiliencia","Gestión del tiempo","Cierre patronal"], c:3, exp:"El cierre patronal es una medida de conflicto laboral, no una competencia personal relacionada con la empleabilidad." },
     { tema:4, q:"La comunicación efectiva, el trabajo en equipo y el liderazgo son ejemplos de:", opts:["Competencias técnicas","Requisitos académicos","Competencias sociales","Habilidades exclusivas del sector TIC"], c:2, exp:"La comunicación efectiva, el trabajo en equipo y el liderazgo son competencias sociales, clave para la empleabilidad." },
     { tema:4, q:"¿Qué incluye la autoestima según el tema?", opts:["Solo la autoimagen física","Autoimagen, autoeficacia y autovaloración","La valoración que hacen de ti los demás","El nivel de estudios alcanzado"], c:1, exp:"La autoestima incluye autoimagen (cómo me veo), autoeficacia (creencia en mis capacidades) y autovaloración (cuánto me valoro)." },
-    // ── TEMA 5 (P01–P08) ──
+    //  TEMA 5 (P01–P08) 
     { tema:5, q:"¿Qué es el aprendizaje autónomo?", opts:["Estudiar sin ningún tipo de recurso externo","La capacidad de tomar control y responsabilidad sobre el propio proceso de aprendizaje","Aprender únicamente a través de plataformas digitales","El aprendizaje que se realiza en solitario, sin interacción con otros"], c:1, exp:"El aprendizaje autónomo es la capacidad de tomar control y responsabilidad sobre el propio proceso de aprendizaje." },
     { tema:5, q:"¿Cómo se definen las competencias en el tema?", opts:["Títulos académicos obtenidos a lo largo de la carrera profesional","Herramientas digitales para gestionar el aprendizaje","Combinaciones de habilidades, conocimientos y actitudes que permiten desempeñarse eficazmente","Los requisitos mínimos que exige un puesto de trabajo"], c:2, exp:"Las competencias son combinaciones de habilidades, conocimientos y actitudes que permiten desempeñarse eficazmente en un contexto." },
     { tema:5, q:"¿Cuál de las siguientes es una competencia TÉCNICA?", opts:["Trabajo en equipo","Comunicación efectiva","Programación o contabilidad","Resiliencia"], c:2, exp:"La programación o la contabilidad son competencias técnicas, ligadas a conocimientos específicos de un ámbito profesional." },
