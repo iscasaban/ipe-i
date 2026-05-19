@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test Tema 1 — Características del Sector Productivo</title>
   <style>
-    /* =============================================
-       IPEI -
-       ============================================= */
     @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Raleway:wght@700;900&display=swap');
 
     :root {
@@ -90,7 +87,7 @@
       font-size: 0.9rem;
     }
 
-    .qcard {
+    .question-card {
       background: var(--color-blanco);
       border-radius: var(--radio);
       box-shadow: var(--sombra);
@@ -390,7 +387,7 @@
       <span>Pregunta ${cur + 1} de ${qs.length}</span>
       <span>${ansCount > 0 ? score + '/' + ansCount + ' correctas' : 'Selecciona una respuesta'}</span>
     </div>
-    <div class="qcard">
+    <div class="question-card">
       <div class="qn">Cuestión ${cur + 1}</div>
       <div class="qt">${q.q}</div>
       <div class="opts">
@@ -401,13 +398,14 @@
         else if (i === selected[cur] && selected[cur] !== q.correct) cls += ' wrong';
       }
       return `<button class="${cls}" ${isAns ? 'disabled' : ''} onclick="ans(${i})">
-            <span class="olbl">${String.fromCharCode(65+i)}</span><span>${o}</span>
+            <span class="olbl">${String.fromCharCode(65 + i)}</span>
+            <span>${o}</span>
           </button>`;
     }).join('')}
       </div>
       ${isAns ? `<div class="fb show ${selected[cur] === q.correct ? 'cfb' : 'wfb'}">
         ${selected[cur] === q.correct ? '<strong>✓ ¡Correcto!</strong>' : '<strong>✗ Respuesta incorrecta.</strong>'}
-        La opción correcta es la <strong>${String.fromCharCode(65+q.correct)}</strong>.
+        La opción correcta es la <strong>${String.fromCharCode(65 + q.correct)}</strong>.
       </div>` : ''}
     </div>
     <div class="nav">
@@ -434,7 +432,7 @@
     const msg = pct >= 90 ? '¡Excelente, dominas el sector!' : pct >= 70 ? 'Buen trabajo, conoces bien el entorno' : pct >= 50 ? 'Aprobado, pero conviene repasar' : 'Necesitas reforzar este tema';
 
     root.innerHTML = `
-    <div class="res qcard">
+    <div class="res question-card">
       <div class="sc-circle"><span class="sc-big">${pct}%</span><span class="sc-den">${score}/${total}</span></div>
       <div class="res-t">${msg}</div>
       <div class="res-s">${SUBTITLE}</div>
@@ -446,10 +444,10 @@
 
       <div class="rev">
         <div class="rev-t">Revisión de respuestas</div>
-        ${qs.map((q,i) => {
+        ${qs.map((q, i) => {
       const isC = answered[i] === q.correct;
       return `<div class="ri ${isC ? 'rc' : 'rw'}">
-            <strong>P${i+1}:</strong> ${q.q}<br>
+            <strong>P${i + 1}:</strong> ${q.q}<br>
             <span style="color: ${isC ? '#1D9E75' : '#E24B4A'}">
               ${isC ? '✓' : '✗'} Tu respuesta: ${answered[i] !== null ? q.opts[answered[i]] : 'Sin responder'}
             </span>
